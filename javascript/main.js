@@ -14,6 +14,7 @@ var board = [
 [0,0,2,2,2,2,2,1,1,1,2,2,2,2,2,2,2,2,2,2]
 ];
 
+var charPos = [0,0]
 var pos = [0,0];
 
 gamejs.preload(['images/grass.png', 'images/mountain.png', 'images/water.png', 'images/dessert.png', 'images/gubbe.png']);
@@ -25,13 +26,13 @@ function main() {
    gamejs.display.setCaption("Example Sprites");
    // create some ship sprites and put them in a group
    
-
+console.log(displayCache.rect.width)
    
    //console.log(char);
    
 
    var c = new char([0, 64]);
-
+   console.log(c);
 
    var tiles = [];
    tiles.push(gamejs.image.load("images/grass.png"));
@@ -58,26 +59,33 @@ function main() {
          if (event.type === gamejs.event.KEY_UP) {
             if (event.key === gamejs.event.K_UP) {
                //pos = gamejs.utils.vectors.add(pos, [0,64]);
-               c.rect.moveIp(0,-64);
-               c.rotation = 0;
+               c.moveUp();
             }
             else if (event.key === gamejs.event.K_DOWN) {
                //pos = gamejs.utils.vectors.add(pos, [0,-64]);
-               c.rect.moveIp(0,64);
-               c.rotation = 180;
+               c.moveDown();
             }
             else if (event.key === gamejs.event.K_RIGHT) {
                //pos = gamejs.utils.vectors.add(pos, [64,0]);
-               c.rect.moveIp(64, 0);
-               c.rotation = 90;
+               c.moveRight();
             }
             else if (event.key === gamejs.event.K_LEFT) {
                //pos = gamejs.utils.vectors.add(pos, [-64,0]);
-               c.rect.moveIp(-64, 0);
-               c.rotation = 270;
+               c.moveLeft();
             };
-              
-         }  
+        }
+
+        if(c.pos()[0] > 5 && pos[0] <= 576) {
+            console.log(pos[0]);
+            pos = gamejs.utils.vectors.add(pos, [64,0]);   
+            c.move(-64, 0);
+        }  
+
+        if(c.pos()[0] < 4 && pos[0] > 0) {
+            console.log(pos[0]);
+            pos = gamejs.utils.vectors.add(pos, [-64,0]);   
+            c.move(64, 0);
+        }  
          
       });
 
