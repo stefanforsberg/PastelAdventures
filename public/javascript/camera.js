@@ -22,9 +22,18 @@ Camera.prototype.updatePosition = function(char) {
 	    char.move(-64, 0);
     }  
 
+    if(char.pos()[1] > 5 && this.pos[1] <= this.sizeOfWorld[1]-11) {
+ 	    this.pos = $v.add(this.pos, [0,1]);   
+	    char.move(0, -64);
+    }  
+
     if(char.pos()[0] < 4 && this.pos[0] > 0) {
-        
         this.pos = $v.add(this.pos, [-1,0]);   
         char.move(64, 0);
     }  
+
+    if(char.pos()[1] < 4 && this.pos[1] > 0) {
+        this.pos = $v.add(this.pos, [0,-1]);   
+        char.move(0, 64);
+    } 
 };

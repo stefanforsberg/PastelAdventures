@@ -4,20 +4,23 @@ var world = require('world').World;
 var camera = require('camera').Camera;
 
 gamejs.preload([
-   'images/grass.png', 
-   'images/mountain.png', 
-   'images/water.png', 
-   'images/dessert.png', 
-   'images/gubbe.png', 
-   'images/tree.png', 
-   'images/char0.png', 
-   'images/char1.png', 
-   'images/char2.png', 
-   'images/bridge.png'
+   'public/images/grass.png', 
+   'public/images/mountain.png', 
+   'public/images/water.png', 
+   'public/images/dessert.png', 
+   'public/images/tree.png', 
+   'public/images/char0.png', 
+   'public/images/char1.png', 
+   'public/images/char2.png', 
+   'public/images/bridge.png',
+   'public/images/bridge1.png',
+   'public/images/snow.png',
+   'public/images/mountain_snow.png',
+   'public/images/water_snow.png'
    ]);
 
 function main() {
-   var displayCache = new gamejs.Surface([1280, 640]);
+   var displayCache = new gamejs.Surface([1280, 1280]);
    var display = gamejs.display.setMode([640, 640]);
    gamejs.display.setCaption("Pastel Adventures");
    
@@ -25,8 +28,8 @@ function main() {
    var c = new char([0, 64]);
    var cam = new camera(w.size());
       
-   for (var x=0;x<20;x++) {
-      for (var y=0; y<10; y++) {
+   for (var x=0;x<w.width();x++) {
+      for (var y=0; y<w.height(); y++) {
          displayCache.blit(w.boardAt(x, y), [x*64, y*64]);
       }
    }

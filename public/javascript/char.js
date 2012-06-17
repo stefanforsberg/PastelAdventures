@@ -9,10 +9,10 @@ var Char = exports.Char = function(rect) {
 
    this.sprites = 
    [
-      gamejs.image.load("images/char0.png"),
-      gamejs.image.load("images/char1.png"),
-      gamejs.image.load("images/char0.png"),
-      gamejs.image.load("images/char2.png")
+      gamejs.image.load("public/images/char0.png"),
+      gamejs.image.load("public/images/char1.png"),
+      gamejs.image.load("public/images/char0.png"),
+      gamejs.image.load("public/images/char2.png")
    ];
 
    this.rotation = 90;

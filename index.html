@@ -13,11 +13,20 @@
         
     </style>
 <!-- Start javascript/main.js -->
-    <script src="./public/yabble.js"></script>
-    <script src="./public/gamejs.min.js"></script>
+    <script src="./public/javascript/yabble.js"></script>
+    <script src="./public/javascript/gamejs.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+
     <script>
-        require.setModuleRoot('./javascript/');
+        require.setModuleRoot('./public/javascript/');
         require.run('main')
+
+        var socket = io.connect('http://localhost:8080');
+        socket.on('news', function (data) {
+          console.log(data);
+          socket.emit('my other event', { my: 'data' });
+        });
+
     </script>
 </head>
 <!-- Html -->
