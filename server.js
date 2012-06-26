@@ -1,24 +1,16 @@
 var util = require('util');
 var io = require('socket.io');
-var static = require('node-static');
+var http = require('http');
 var world = require('./public/javascript/world');
+var express = require('express');
 var count = 0;
 var users = [];
 
-var file = new(static.Server)('.', { cache: 7200, headers: {'X-Hello':'World!'} });
+var app = express();
+var server = http.createServer(app);
 
-var app = require('http').createServer(function (request, response) {
-    request.addListener('end', function () {
-        file.serve(request, response, function (err, res) {
-            if (err) { // An error as occured
-                util.error("> Error serving " + request.url + " - " + err.message);
-                response.writeHead(err.status, err.headers);
-                response.end();
-            } else { // The file was served successfully
-                util.puts("> " + request.url + " - " + res.message);
-            }
-        });
-    });
+app.configure(function(){
+    app.use(express.static(__dirname));
 });
 
 var user = function(id) {
@@ -27,8 +19,9 @@ var user = function(id) {
     return this;
 };
 
-io = io.listen(app);
-app.listen(8080);
+
+io = io.listen(server);
+server.listen(8080);
 
 io.sockets.on('connection', function (socket) {
   
