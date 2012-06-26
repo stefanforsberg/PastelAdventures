@@ -1,10 +1,3 @@
-var gamejs = require('gamejs');
-
-var Tile = function(img, blocks) {
-	this.img = img;
-	this.blocks = blocks;
-}
-
 var World = exports.World = function() {
 
 	this.board = [
@@ -30,18 +23,18 @@ var World = exports.World = function() {
 	[0,0,2,2,2,2,2,1,1,1,2,2,2,2,2,2,2,2,2,2]
 	];
 	
-	this.tiles = [];
+	// this.tiles = [];
 
-	this.tiles.push(new Tile(gamejs.image.load("public/images/grass.png"), false));
-	this.tiles.push(new Tile(gamejs.image.load("public/images/mountain.png"), true));
-	this.tiles.push(new Tile(gamejs.image.load("public/images/water.png"), true));
-	this.tiles.push(new Tile(gamejs.image.load("public/images/dessert.png"), false));
-	this.tiles.push(new Tile(gamejs.image.load("public/images/tree.png"), false));
-	this.tiles.push(new Tile(gamejs.image.load("public/images/bridge.png"), false));
-	this.tiles.push(new Tile(gamejs.image.load("public/images/snow.png"), false));
-	this.tiles.push(new Tile(gamejs.image.load("public/images/mountain_snow.png"), true));
-	this.tiles.push(new Tile(gamejs.image.load("public/images/bridge1.png"), false));
-	this.tiles.push(new Tile(gamejs.image.load("public/images/water_snow.png"), true));
+	// this.tiles.push(new Tile(gamejs.image.load("public/images/grass.png"), false));
+	// this.tiles.push(new Tile(gamejs.image.load("public/images/mountain.png"), true));
+	// this.tiles.push(new Tile(gamejs.image.load("public/images/water.png"), true));
+	// this.tiles.push(new Tile(gamejs.image.load("public/images/dessert.png"), false));
+	// this.tiles.push(new Tile(gamejs.image.load("public/images/tree.png"), false));
+	// this.tiles.push(new Tile(gamejs.image.load("public/images/bridge.png"), false));
+	// this.tiles.push(new Tile(gamejs.image.load("public/images/snow.png"), false));
+	// this.tiles.push(new Tile(gamejs.image.load("public/images/mountain_snow.png"), true));
+	// this.tiles.push(new Tile(gamejs.image.load("public/images/bridge1.png"), false));
+	// this.tiles.push(new Tile(gamejs.image.load("public/images/water_snow.png"), true));
 
  	return this;
 };
@@ -59,12 +52,10 @@ World.prototype.height = function() {
 };
 
 World.prototype.boardAt = function(x, y) {
-	return this.tiles[this.board[y][x]].img;
+	return this.board[y][x];
+	//return this.tiles[this.board[y][x]].img;
 };
 
 World.prototype.canGoTo = function(x, y) {
-
-	if (typeof this.board[y][x] === "undefined") return false;
-
-	return !this.tiles[this.board[y][x]].blocks;
+	return (typeof this.board[y][x] !== "undefined");
 };
