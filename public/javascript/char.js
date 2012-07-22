@@ -1,6 +1,6 @@
 var gamejs = require('gamejs');
 
-var Char = exports.Char = function(rect) {
+var Char = exports.Char = function(rect, id) {
    Char.superConstructor.apply(this, arguments);
 
    //this.originalImage = gamejs.image.load("images/gubbe.png");

@@ -25,7 +25,6 @@ var Tiles = exports.Tiles = function() {
 };
 
 Tiles.prototype.tileAt = function(i) {
-	console.log(this.tiles);
 	return this.tiles[i].img;
 };
 

@@ -4,7 +4,7 @@ var http = require('http');
 var world = require('./public/javascript/world');
 var express = require('express');
 var count = 0;
-var users = [];
+var users = {};
 
 var app = express();
 var server = http.createServer(app);
@@ -15,24 +15,30 @@ app.configure(function(){
 
 var user = function(id) {
     this.id = id;
-
+    this.pos = [0,0];
+    this.si = 0;
+    this.r = 90;
     return this;
 };
-
 
 io = io.listen(server);
 server.listen(8080);
 
 io.sockets.on('connection', function (socket) {
   
-    // users.push(new user(socket.id));
+    users[socket.id] = new user(socket.id);
 
-    // console.log("helllo: " + users.length);
+    socket.emit('connected', {u: users});
 
-    // // socket.emit('news', { hello: count });
-    socket.on('move', function (data) {
-        console.log(data);
+    socket.on('disconnect', function () {
+        delete users[socket.id];
+    });
+
+    socket.on('cu', function (data) {
+        users[socket.id].pos = data.p;
+        users[socket.id].si = data.si;
+        users[socket.id].r = data.r;
+        
+        socket.broadcast.emit('ocu', {u: users[socket.id]});
     });
 });
-
-util.puts("> node-static is listening on http://127.0.0.1:8080");
