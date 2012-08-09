@@ -17,7 +17,6 @@ var user = function(id) {
     this.id = id;
     this.pos = [0,0];
     this.si = 0;
-    this.r = 90;
     return this;
 };
 
@@ -37,7 +36,6 @@ io.sockets.on('connection', function (socket) {
     socket.on('cu', function (data) {
         users[socket.id].pos = data.p;
         users[socket.id].si = data.si;
-        users[socket.id].r = data.r;
         
         socket.broadcast.emit('ocu', {u: users[socket.id]});
     });

@@ -13,7 +13,7 @@ var Tiles = exports.Tiles = function() {
 	this.tiles.push(new Tile(gamejs.image.load("public/images/mountain.png"), true));
 	this.tiles.push(new Tile(gamejs.image.load("public/images/water.png"), true));
 	this.tiles.push(new Tile(gamejs.image.load("public/images/dessert.png"), false));
-	this.tiles.push(new Tile(gamejs.image.load("public/images/tree.png"), false));
+	this.tiles.push(new Tile(gamejs.image.load("public/images/tree.png"), true));
 	this.tiles.push(new Tile(gamejs.image.load("public/images/bridge.png"), false));
 	this.tiles.push(new Tile(gamejs.image.load("public/images/snow.png"), false));
 	this.tiles.push(new Tile(gamejs.image.load("public/images/mountain_snow.png"), true));

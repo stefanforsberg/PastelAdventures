@@ -14,9 +14,10 @@ gamejs.preload([
    'public/images/water.png', 
    'public/images/dessert.png', 
    'public/images/tree.png', 
-   'public/images/char0.png', 
-   'public/images/char1.png', 
-   'public/images/char2.png', 
+   'public/images/char_d.png', 
+   'public/images/char_u.png', 
+   'public/images/char_r.png', 
+   'public/images/char_l.png',
    'public/images/bridge.png',
    'public/images/bridge1.png',
    'public/images/snow.png',
@@ -35,13 +36,14 @@ function start() {
    gamejs.display.setCaption("Pastel Adventures");
    
    var w = new world();
-   var c = new char([0, 64]);
+   var c = new char([0, 0]);
    var cam = new camera(w.size());
    var t = new tiles();
+   var tileSize = 16;
       
    for (var x=0;x<w.width();x++) {
       for (var y=0; y<w.height(); y++) {
-         displayCache.blit(t.tileAt(w.boardAt(x, y)), [x*64, y*64]);
+         displayCache.blit(t.tileAt(w.boardAt(x, y)), [x*tileSize, y*tileSize]);
       }
    }
 
@@ -109,14 +111,14 @@ function main() {
 
          for (var key in data.u) {
             if(key === socket.socket.sessionid) continue;
-            users[key] = new otherChar(new gamejs.Rect(gamejs.utils.vectors.multiply(data.u[key].pos, 64)), data.u[key].r, data.u[key].si);
+            users[key] = new otherChar(new gamejs.Rect(gamejs.utils.vectors.multiply(data.u[key].pos, 16)), data.u[key].si);
          }
 
          start();
    });
 
    socket.on('ocu', function (data) {
-      users[data.u.id].place(data.u.pos, data.u.r, data.u.si);
+      users[data.u.id].place(data.u.pos, data.u.si);
       update = true;
    });
 
