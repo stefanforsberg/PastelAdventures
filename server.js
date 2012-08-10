@@ -24,10 +24,11 @@ io = io.listen(server);
 server.listen(8080);
 
 io.sockets.on('connection', function (socket) {
-  
+    
     users[socket.id] = new user(socket.id);
 
     socket.emit('connected', {u: users});
+    socket.broadcast.emit('otherConnected', {u: users[socket.id]});
 
     socket.on('disconnect', function () {
         delete users[socket.id];

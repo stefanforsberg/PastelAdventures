@@ -123,7 +123,8 @@ function main() {
    });
 
    socket.on('otherConnected', function (data) {
-
+      users[data.u.id] = new otherChar(new gamejs.Rect(gamejs.utils.vectors.multiply(data.u.pos, shared.tileSize)), data.u.si);
+      update = true;
    });
 
    socket.on('disconnected', function(data) {
