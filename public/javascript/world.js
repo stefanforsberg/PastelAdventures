@@ -63,5 +63,5 @@ World.prototype.boardAt = function(x, y) {
 };
 
 World.prototype.canGoTo = function(x, y) {
-	return (typeof this.board[y][x] !== "undefined");
+	return (typeof this.board[y] !== "undefined" && typeof this.board[y][x] !== "undefined");
 };
