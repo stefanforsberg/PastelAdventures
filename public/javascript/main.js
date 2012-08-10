@@ -35,6 +35,13 @@ function canGoTo(w,t,x,y) {
    return w.canGoTo(x, y) && t.canGoTo(w.boardAt(x, y));
 };
 
+function moveWithCheck(canGo, moveFunction) {
+   if(canGo) {
+      moveFunction();
+      update = true;
+   };
+};
+
 function start() {
 
    var displayCache = new gamejs.Surface([1280, 1280]);
@@ -61,29 +68,22 @@ function start() {
       gamejs.event.get().forEach(function(event) {
          if (event.type === gamejs.event.KEY_UP) {
 
-            update = true;
+            
 
             var p = gamejs.utils.vectors.add(c.pos(), cam.position())
 
             if (event.key === gamejs.event.K_UP) {
-               if (canGoTo(w,t,p[0], p[1]-1)) c.moveUp();
+               moveWithCheck(canGoTo(w,t,p[0], p[1]-1), function() { c.moveUp() });
             }
             else if (event.key === gamejs.event.K_DOWN) {
-               if (canGoTo(w,t,p[0], p[1]+1)) c.moveDown();
+               moveWithCheck(canGoTo(w,t,p[0], p[1]+1), function() { c.moveDown() });
             }
             else if (event.key === gamejs.event.K_RIGHT) {
-               if (canGoTo(w,t,p[0]+1, p[1])) c.moveRight();
+               moveWithCheck(canGoTo(w,t,p[0]+1, p[1]), function() { c.moveRight() });
             }
             else if (event.key === gamejs.event.K_LEFT) {
-               if (canGoTo(w,t,p[0]-1, p[1])) c.moveLeft();
+               moveWithCheck(canGoTo(w,t,p[0]-1, p[1]), function() { c.moveLeft() });
             };
-
-            socket.emit('cu', 
-               { 
-                  p: gamejs.utils.vectors.add(c.pos(), cam.position()),
-                  r: c.rotation,
-                  si: c.spriteIndex
-               });
          }
 
          cam.updatePosition(c);
@@ -91,6 +91,13 @@ function start() {
       });
       
       if(update) {
+
+         socket.emit('cu', 
+         { 
+            p: gamejs.utils.vectors.add(c.pos(), cam.position()),
+            r: c.rotation,
+            si: c.spriteIndex
+         });
 
          display.fill("#FFFFFF");
          display.blit(displayCache, new gamejs.Rect([0,0], [640, 640]), new gamejs.Rect(cam.asPixelVector(), [640, 640]));
