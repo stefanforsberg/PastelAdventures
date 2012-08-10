@@ -12,6 +12,7 @@ var Tiles = exports.Tiles = function() {
 	this.tiles.push(new Tile(gamejs.image.load("public/images/grass.png"), false));
 	this.tiles.push(new Tile(gamejs.image.load("public/images/mountain.png"), true));
 	this.tiles.push(new Tile(gamejs.image.load("public/images/water.png"), true));
+	this.tiles.push(new Tile(gamejs.image.load("public/images/water_l.png"), true));
 	this.tiles.push(new Tile(gamejs.image.load("public/images/dessert.png"), false));
 	this.tiles.push(new Tile(gamejs.image.load("public/images/tree.png"), true));
 	this.tiles.push(new Tile(gamejs.image.load("public/images/bridge.png"), false));
@@ -29,6 +30,5 @@ Tiles.prototype.tileAt = function(i) {
 };
 
 Tiles.prototype.canGoTo = function(i) {
-	// if (typeof this.board[y][x] === "undefined") return false;
 	return !this.tiles[i].blocks;
 };

@@ -1,4 +1,5 @@
 var gamejs = require('gamejs');
+var shared = require('shared');
 
 var OtherChar = exports.OtherChar = function(rect, si) {
    OtherChar.superConstructor.apply(this, arguments[0]);
@@ -7,10 +8,10 @@ var OtherChar = exports.OtherChar = function(rect, si) {
 
    this.sprites = 
    [
-      gamejs.image.load("public/images/char_d.png"),
-      gamejs.image.load("public/images/char_u.png"),
-      gamejs.image.load("public/images/char_r.png"),
-      gamejs.image.load("public/images/char_l.png")
+      gamejs.image.load("public/images/char_o_d.png"),
+      gamejs.image.load("public/images/char_o_u.png"),
+      gamejs.image.load("public/images/char_o_r.png"),
+      gamejs.image.load("public/images/char_o_l.png")
    ];
 
    this.rect = rect;
@@ -23,7 +24,7 @@ gamejs.utils.objects.extend(OtherChar, gamejs.sprite.Sprite);
 
 OtherChar.prototype.place = function(pos, si) {
    this.spriteIndex = si;
-   this.rect = new gamejs.Rect(gamejs.utils.vectors.multiply(pos, 16));
+   this.rect = new gamejs.Rect(gamejs.utils.vectors.multiply(pos, shared.tileSize));
 };
 
 OtherChar.prototype.update = function() {

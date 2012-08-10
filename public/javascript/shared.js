@@ -1,0 +1,1 @@
+exports.tileSize = 16;

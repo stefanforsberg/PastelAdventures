@@ -4,6 +4,7 @@ var otherChar = require('otherChar').OtherChar;
 var world = require('world').World;
 var tiles = require('tiles').Tiles;
 var camera = require('camera').Camera;
+var shared = require('shared');
 var socket;
 var users = {};
 var update = true;
@@ -12,12 +13,17 @@ gamejs.preload([
    'public/images/grass.png', 
    'public/images/mountain.png', 
    'public/images/water.png', 
+   'public/images/water_l.png', 
    'public/images/dessert.png', 
    'public/images/tree.png', 
    'public/images/char_d.png', 
    'public/images/char_u.png', 
    'public/images/char_r.png', 
    'public/images/char_l.png',
+   'public/images/char_o_d.png', 
+   'public/images/char_o_u.png', 
+   'public/images/char_o_r.png', 
+   'public/images/char_o_l.png',   
    'public/images/bridge.png',
    'public/images/bridge1.png',
    'public/images/snow.png',
@@ -39,11 +45,10 @@ function start() {
    var c = new char([0, 0]);
    var cam = new camera(w.size());
    var t = new tiles();
-   var tileSize = 16;
       
    for (var x=0;x<w.width();x++) {
       for (var y=0; y<w.height(); y++) {
-         displayCache.blit(t.tileAt(w.boardAt(x, y)), [x*tileSize, y*tileSize]);
+         displayCache.blit(t.tileAt(w.boardAt(x, y)), [x*shared.tileSize, y*shared.tileSize]);
       }
    }
 
@@ -61,7 +66,7 @@ function start() {
             var p = gamejs.utils.vectors.add(c.pos(), cam.position())
 
             if (event.key === gamejs.event.K_UP) {
-               if (w.canGoTo(p[0], p[1]-1)) c.moveUp();
+               if (canGoTo(w,t,p[0], p[1]-1)) c.moveUp();
             }
             else if (event.key === gamejs.event.K_DOWN) {
                if (canGoTo(w,t,p[0], p[1]+1)) c.moveDown();
@@ -111,10 +116,14 @@ function main() {
 
          for (var key in data.u) {
             if(key === socket.socket.sessionid) continue;
-            users[key] = new otherChar(new gamejs.Rect(gamejs.utils.vectors.multiply(data.u[key].pos, 16)), data.u[key].si);
+            users[key] = new otherChar(new gamejs.Rect(gamejs.utils.vectors.multiply(data.u[key].pos, shared.tileSize)), data.u[key].si);
          }
 
          start();
+   });
+
+   socket.on('otherConnected', function (data) {
+
    });
 
    socket.on('ocu', function (data) {
