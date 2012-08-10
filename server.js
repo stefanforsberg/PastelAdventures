@@ -28,11 +28,10 @@ io.sockets.on('connection', function (socket) {
     users[socket.id] = new user(socket.id);
 
     socket.emit('connected', {u: users});
-    socket.broadcast.emit('connected', {u: users});
 
     socket.on('disconnect', function () {
         delete users[socket.id];
-        socket.broadcast.emit('connected', {u: users});
+        socket.broadcast.emit('disconnected', {id: socket.id});
     });
 
     socket.on('cu', function (data) {

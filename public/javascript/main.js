@@ -126,6 +126,11 @@ function main() {
 
    });
 
+   socket.on('disconnected', function(data) {
+      delete users[data.id];
+      update = true;
+   });
+
    socket.on('ocu', function (data) {
       users[data.u.id].place(data.u.pos, data.u.si);
       update = true;
