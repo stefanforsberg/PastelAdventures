@@ -8,10 +8,10 @@ var Char = exports.Char = function(rect) {
 
    this.sprites = 
    [
-      gamejs.image.load("public/images/char_d.png"),
-      gamejs.image.load("public/images/char_u.png"),
-      gamejs.image.load("public/images/char_r.png"),
-      gamejs.image.load("public/images/char_l.png")
+      gamejs.image.load(shared.imagePath + "char_d.png"),
+      gamejs.image.load(shared.imagePath + "char_u.png"),
+      gamejs.image.load(shared.imagePath + "char_r.png"),
+      gamejs.image.load(shared.imagePath + "char_l.png")
    ];
 
    this.image = this.sprites[this.spriteIndex];

@@ -8,10 +8,10 @@ var OtherChar = exports.OtherChar = function(rect, si) {
 
    this.sprites = 
    [
-      gamejs.image.load("public/images/char_o_d.png"),
-      gamejs.image.load("public/images/char_o_u.png"),
-      gamejs.image.load("public/images/char_o_r.png"),
-      gamejs.image.load("public/images/char_o_l.png")
+      gamejs.image.load(shared.imagePath + "char_o_d.png"),
+      gamejs.image.load(shared.imagePath + "char_o_u.png"),
+      gamejs.image.load(shared.imagePath + "char_o_r.png"),
+      gamejs.image.load(shared.imagePath + "char_o_l.png")
    ];
 
    this.rect = rect;

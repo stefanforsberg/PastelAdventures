@@ -10,7 +10,7 @@ var app = express();
 var server = http.createServer(app);
 
 app.configure(function(){
-    app.use(express.static(__dirname));
+    app.use(express.static(__dirname + "/public"));
 });
 
 var user = function(id) {

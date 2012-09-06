@@ -1,4 +1,5 @@
 var gamejs = require('gamejs');
+var shared = require('shared');
 
 var Tiles = exports.Tiles = function() {
 
@@ -9,17 +10,17 @@ var Tiles = exports.Tiles = function() {
 
 	this.tiles = [];
 
-	this.tiles.push(new Tile(gamejs.image.load("public/images/grass.png"), false));
-	this.tiles.push(new Tile(gamejs.image.load("public/images/mountain.png"), true));
-	this.tiles.push(new Tile(gamejs.image.load("public/images/water.png"), true));
-	this.tiles.push(new Tile(gamejs.image.load("public/images/water_l.png"), true));
-	this.tiles.push(new Tile(gamejs.image.load("public/images/dessert.png"), false));
-	this.tiles.push(new Tile(gamejs.image.load("public/images/tree.png"), true));
-	this.tiles.push(new Tile(gamejs.image.load("public/images/bridge.png"), false));
-	this.tiles.push(new Tile(gamejs.image.load("public/images/snow.png"), false));
-	this.tiles.push(new Tile(gamejs.image.load("public/images/mountain_snow.png"), true));
-	this.tiles.push(new Tile(gamejs.image.load("public/images/bridge1.png"), false));
-	this.tiles.push(new Tile(gamejs.image.load("public/images/water_snow.png"), true));
+	this.tiles.push(new Tile(gamejs.image.load(shared.imagePath + "grass.png"), false));
+	this.tiles.push(new Tile(gamejs.image.load(shared.imagePath + "mountain.png"), true));
+	this.tiles.push(new Tile(gamejs.image.load(shared.imagePath + "water.png"), true));
+	this.tiles.push(new Tile(gamejs.image.load(shared.imagePath + "water_l.png"), true));
+	this.tiles.push(new Tile(gamejs.image.load(shared.imagePath + "dessert.png"), false));
+	this.tiles.push(new Tile(gamejs.image.load(shared.imagePath + "tree.png"), true));
+	this.tiles.push(new Tile(gamejs.image.load(shared.imagePath + "bridge.png"), false));
+	this.tiles.push(new Tile(gamejs.image.load(shared.imagePath + "snow.png"), false));
+	this.tiles.push(new Tile(gamejs.image.load(shared.imagePath + "mountain_snow.png"), true));
+	this.tiles.push(new Tile(gamejs.image.load(shared.imagePath + "bridge1.png"), false));
+	this.tiles.push(new Tile(gamejs.image.load(shared.imagePath + "water_snow.png"), true));
 
 	return this;
 

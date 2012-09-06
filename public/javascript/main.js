@@ -9,27 +9,63 @@ var socket;
 var users = {};
 var update = true;
 
-gamejs.preload([
-   'public/images/grass.png', 
-   'public/images/mountain.png', 
-   'public/images/water.png', 
-   'public/images/water_l.png', 
-   'public/images/dessert.png', 
-   'public/images/tree.png', 
-   'public/images/char_d.png', 
-   'public/images/char_u.png', 
-   'public/images/char_r.png', 
-   'public/images/char_l.png',
-   'public/images/char_o_d.png', 
-   'public/images/char_o_u.png', 
-   'public/images/char_o_r.png', 
-   'public/images/char_o_l.png',   
-   'public/images/bridge.png',
-   'public/images/bridge1.png',
-   'public/images/snow.png',
-   'public/images/mountain_snow.png',
-   'public/images/water_snow.png'
+// gamejs.preload([
+//    'public/images/grass.png', 
+//    'public/images/mountain.png', 
+//    'public/images/water.png', 
+//    'public/images/water_l.png', 
+//    'public/images/dessert.png', 
+//    'public/images/tree.png', 
+//    'public/images/char_d.png', 
+//    'public/images/char_u.png', 
+//    'public/images/char_r.png', 
+//    'public/images/char_l.png',
+//    'public/images/char_o_d.png', 
+//    'public/images/char_o_u.png', 
+//    'public/images/char_o_r.png', 
+//    'public/images/char_o_l.png',   
+//    'public/images/bridge.png',
+//    'public/images/bridge1.png',
+//    'public/images/snow.png',
+//    'public/images/mountain_snow.png',
+//    'public/images/water_snow.png'
+//    ]);
+
+preloadImages([
+   'grass.png', 
+   'mountain.png', 
+   'water.png', 
+   'water_l.png', 
+   'dessert.png', 
+   'tree.png', 
+   'char_d.png', 
+   'char_u.png', 
+   'char_r.png', 
+   'char_l.png',
+   'char_o_d.png', 
+   'char_o_u.png', 
+   'char_o_r.png', 
+   'char_o_l.png',   
+   'bridge.png',
+   'bridge1.png',
+   'snow.png',
+   'mountain_snow.png',
+   'water_snow.png'
    ]);
+
+function preloadImages(images) {
+   var imagesWithPath = [];
+   console.log(images.length);
+   for(var i = 0; i < images.length; i++) {
+      console.log(i);
+      imagesWithPath.push(shared.imagePath + images[i]);
+   }
+
+   console.log("hej");
+   console.log(imagesWithPath)
+
+   gamejs.preload(imagesWithPath);
+}
 
 function canGoTo(w,t,x,y) {
    return w.canGoTo(x, y) && t.canGoTo(w.boardAt(x, y));
