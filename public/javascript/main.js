@@ -33,26 +33,30 @@ gamejs.preload([
 
 function canGoTo(w,t,x,y) {
    return w.canGoTo(x, y) && t.canGoTo(w.boardAt(x, y));
-};
+}
 
 function moveWithCheck(canGo, moveFunction) {
    if(canGo) {
       moveFunction();
       update = true;
-   };
-};
+   }
+}
 
 function start() {
 
    var displayCache = new gamejs.Surface([1280, 1280]);
    var display = gamejs.display.setMode([640, 640]);
+
    gamejs.display.setCaption("Pastel Adventures");
    
    var w = new world();
    var c = new char([0, 0]);
    var cam = new camera(w.size());
    var t = new tiles();
-      
+   var timeDir = 1;
+   var timeValue = 0.01;
+
+
    for (var x=0;x<w.width();x++) {
       for (var y=0; y<w.height(); y++) {
          displayCache.blit(t.tileAt(w.boardAt(x, y)), [x*shared.tileSize, y*shared.tileSize]);
@@ -68,22 +72,20 @@ function start() {
       gamejs.event.get().forEach(function(event) {
          if (event.type === gamejs.event.KEY_UP) {
 
-            
-
-            var p = gamejs.utils.vectors.add(c.pos(), cam.position())
+            var p = gamejs.utils.vectors.add(c.pos(), cam.position());
 
             if (event.key === gamejs.event.K_UP) {
-               moveWithCheck(canGoTo(w,t,p[0], p[1]-1), function() { c.moveUp() });
+               moveWithCheck(canGoTo(w,t,p[0], p[1]-1), function() { c.moveUp(); });
             }
             else if (event.key === gamejs.event.K_DOWN) {
-               moveWithCheck(canGoTo(w,t,p[0], p[1]+1), function() { c.moveDown() });
+               moveWithCheck(canGoTo(w,t,p[0], p[1]+1), function() { c.moveDown(); });
             }
             else if (event.key === gamejs.event.K_RIGHT) {
-               moveWithCheck(canGoTo(w,t,p[0]+1, p[1]), function() { c.moveRight() });
+               moveWithCheck(canGoTo(w,t,p[0]+1, p[1]), function() { c.moveRight(); });
             }
             else if (event.key === gamejs.event.K_LEFT) {
-               moveWithCheck(canGoTo(w,t,p[0]-1, p[1]), function() { c.moveLeft() });
-            };
+               moveWithCheck(canGoTo(w,t,p[0]-1, p[1]), function() { c.moveLeft(); });
+            }
          }
 
          cam.updatePosition(c);
@@ -110,10 +112,20 @@ function start() {
          c.update();
          c.draw(display);
 
-         update = false;
+         
+
+         if(timeValue >= 0.75 || timeValue < 0.01) timeDir = timeDir*-1; 
+
+         timeValue += 0.01*timeDir;
+
+         gamejs.draw.rect(display, 'rgba(0,0, 0, '+ timeValue+')', new gamejs.Rect([0,0], [640, 640]));
+
+
+
+         // update = false;
       }
-   };
-};
+   }
+}
 
 function main() {
    

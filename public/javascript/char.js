@@ -1,7 +1,7 @@
 var gamejs = require('gamejs');
 var shared = require('shared');
 
-var Char = exports.Char = function(rect, id) {
+var Char = exports.Char = function(rect) {
    Char.superConstructor.apply(this, arguments);
 
    this.spriteIndex = 0;

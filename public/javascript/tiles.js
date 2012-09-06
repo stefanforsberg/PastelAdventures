@@ -5,7 +5,7 @@ var Tiles = exports.Tiles = function() {
 	var Tile = function(img, blocks) {
 		this.img = img;
 		this.blocks = blocks;
-	}
+	};
 
 	this.tiles = [];
 
@@ -21,7 +21,7 @@ var Tiles = exports.Tiles = function() {
 	this.tiles.push(new Tile(gamejs.image.load("public/images/bridge1.png"), false));
 	this.tiles.push(new Tile(gamejs.image.load("public/images/water_snow.png"), true));
 
- 	return this;
+	return this;
 
 };
 

@@ -43,19 +43,19 @@ var World = exports.World = function() {
 	[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 	];
 
- 	return this;
+	return this;
 };
 
 World.prototype.size = function() {
-	return [this.board[0].length, this.board.length]
-}
+	return [this.board[0].length, this.board.length];
+};
 
 World.prototype.width = function() {
-	return this.board[0].length
+	return this.board[0].length;
 };
 
 World.prototype.height = function() {
-	return this.board.length
+	return this.board.length;
 };
 
 World.prototype.boardAt = function(x, y) {
