@@ -148,17 +148,11 @@ function start() {
          c.update();
          c.draw(display);
 
-         
-
          if(timeValue >= 0.75 || timeValue < 0.01) timeDir = timeDir*-1; 
 
-         timeValue += 0.01*timeDir;
+         timeValue += 0.001*timeDir;
 
          gamejs.draw.rect(display, 'rgba(0,0, 0, '+ timeValue+')', new gamejs.Rect([0,0], [640, 640]));
-
-
-
-         // update = false;
       }
    }
 }
