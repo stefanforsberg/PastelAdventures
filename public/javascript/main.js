@@ -55,14 +55,11 @@ preloadImages([
 
 function preloadImages(images) {
    var imagesWithPath = [];
-   console.log(images.length);
+
    for(var i = 0; i < images.length; i++) {
       console.log(i);
       imagesWithPath.push(shared.imagePath + images[i]);
    }
-
-   console.log("hej");
-   console.log(imagesWithPath)
 
    gamejs.preload(imagesWithPath);
 }
