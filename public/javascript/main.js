@@ -9,28 +9,6 @@ var socket;
 var users = {};
 var update = true;
 
-// gamejs.preload([
-//    'public/images/grass.png', 
-//    'public/images/mountain.png', 
-//    'public/images/water.png', 
-//    'public/images/water_l.png', 
-//    'public/images/dessert.png', 
-//    'public/images/tree.png', 
-//    'public/images/char_d.png', 
-//    'public/images/char_u.png', 
-//    'public/images/char_r.png', 
-//    'public/images/char_l.png',
-//    'public/images/char_o_d.png', 
-//    'public/images/char_o_u.png', 
-//    'public/images/char_o_r.png', 
-//    'public/images/char_o_l.png',   
-//    'public/images/bridge.png',
-//    'public/images/bridge1.png',
-//    'public/images/snow.png',
-//    'public/images/mountain_snow.png',
-//    'public/images/water_snow.png'
-//    ]);
-
 preloadImages([
    'grass.png', 
    'mountain.png', 
@@ -86,9 +64,6 @@ function start() {
    var c = new char([0, 0]);
    var cam = new camera(w.size());
    var t = new tiles();
-   var timeDir = 1;
-   var timeValue = 0.01;
-
 
    for (var x=0;x<w.width();x++) {
       for (var y=0; y<w.height(); y++) {
@@ -145,11 +120,7 @@ function start() {
          c.update();
          c.draw(display);
 
-         if(timeValue >= 0.75 || timeValue < 0.01) timeDir = timeDir*-1; 
-
-         timeValue += 0.001*timeDir;
-
-         gamejs.draw.rect(display, 'rgba(0,0, 0, '+ timeValue+')', new gamejs.Rect([0,0], [640, 640]));
+         update = false;
       }
    }
 }
@@ -157,6 +128,8 @@ function start() {
 function main() {
    
    socket = io.connect('http://localhost:8080');
+
+   console.log("loc: " + localStorage);
 
    socket.on('connected', function (data) {
 
