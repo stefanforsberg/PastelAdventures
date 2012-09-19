@@ -47,9 +47,9 @@ function canGoTo(w,t,x,y) {
 }
 
 function moveWithCheck(canGo, moveFunction) {
+   update = true;
    if(canGo) {
       moveFunction();
-      update = true;
    }
 }
 
@@ -83,15 +83,19 @@ function start() {
             var p = gamejs.utils.vectors.add(c.pos(), cam.position());
 
             if (event.key === gamejs.event.K_UP) {
+               c.turnUp();
                moveWithCheck(canGoTo(w,t,p[0], p[1]-1), function() { c.moveUp(); });
             }
             else if (event.key === gamejs.event.K_DOWN) {
+               c.turnDown();
                moveWithCheck(canGoTo(w,t,p[0], p[1]+1), function() { c.moveDown(); });
             }
             else if (event.key === gamejs.event.K_RIGHT) {
+               c.turnRight();
                moveWithCheck(canGoTo(w,t,p[0]+1, p[1]), function() { c.moveRight(); });
             }
             else if (event.key === gamejs.event.K_LEFT) {
+               c.turnLeft();
                moveWithCheck(canGoTo(w,t,p[0]-1, p[1]), function() { c.moveLeft(); });
             }
          }
@@ -129,7 +133,7 @@ function main() {
    
    socket = io.connect('http://localhost:8080');
 
-   console.log("loc: " + localStorage);
+   socket.socket.sessionid
 
    socket.on('connected', function (data) {
 

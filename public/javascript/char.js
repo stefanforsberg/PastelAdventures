@@ -21,24 +21,36 @@ var Char = exports.Char = function(rect) {
 
 gamejs.utils.objects.extend(Char, gamejs.sprite.Sprite);
 
+Char.prototype.turnUp = function() {
+   this.spriteIndex = 1;
+};
+
 Char.prototype.moveUp = function() {
    this.rect.moveIp(0,-shared.tileSize);
-   this.spriteIndex = 1;
+};
+
+Char.prototype.turnDown = function() {
+   this.spriteIndex = 0;
 };
 
 Char.prototype.moveDown = function() {
    this.rect.moveIp(0,shared.tileSize);
-   this.spriteIndex = 0;
+};
+
+Char.prototype.turnRight = function() {
+   this.spriteIndex = 2;
 };
 
 Char.prototype.moveRight = function() {
    this.rect.moveIp(shared.tileSize, 0);
-   this.spriteIndex = 2;
+};
+
+Char.prototype.turnLeft = function() {
+   this.spriteIndex = 3;
 };
 
 Char.prototype.moveLeft = function() {
    this.rect.moveIp(-shared.tileSize, 0);
-   this.spriteIndex = 3;
 };
 
 Char.prototype.move = function(x, y) {
