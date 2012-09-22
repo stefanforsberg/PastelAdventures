@@ -1,17 +1,37 @@
-var util = require('util');
 var io = require('socket.io');
 var http = require('http');
-var world = require('./public/javascript/world');
 var express = require('express');
-var count = 0;
 var users = {};
 
 var app = express();
 var server = http.createServer(app);
 
-app.configure(function(){
-    app.use(express.static(__dirname + "/public"));
+app.use(express.cookieParser('keyboard cat'));
+app.use(express.session());
+app.use(express.bodyParser());
+
+app.get('/game.html', function (req, res, next) {
+    if (!req.session.user_id) {
+        res.send('You are not authorized to view this page');
+    } else {
+        next();
+        //res.send('if you are viewing this page it means you are logged in');
+    }
 });
+
+app.post('/index.html', function (req, res) {
+  var post = req.body;
+
+  if (post.user.name == 'john' && post.user.password == 'johnspassword') {
+    req.session.user_id = "12345";
+    res.redirect('/game.html');
+  } else {
+    res.redirect('/index.html');
+  }
+});
+
+
+app.use(express.static(__dirname + "/public"));
 
 var user = function(id) {
     this.id = id;

@@ -1,33 +1,7 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Pastel Adventures</title>
-<!-- Styling -->
-    <style type=text/css>
-        body{
-           background:#fff;
-           color:#222;
-           margin:1em 0 2em 6em;
-           padding:0;
-        }
-        
-    </style>
-<!-- Start javascript/main.js -->
-    <script src="./javascript/yabble.js"></script>
-    <script src="./javascript/gamejs.min.js"></script>
-    <script src="/socket.io/socket.io.js"></script>
+Hello!
 
-    <script>
-        require.setModuleRoot('./javascript/');
-        require.run('main')
-    </script>
-</head>
-<!-- Html -->
-<body>
-    <div>
-        
-        <canvas id="gjs-canvas"></canvas>
-        
-    </div>
-</body>
-</html>
+<form method="post" action="index.html">
+	<input type="text" name="user[name]" />
+	<input type="password" name="user[password]" />
+	<input type="submit" value="Login" />
+</form>
