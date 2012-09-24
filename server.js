@@ -1,6 +1,7 @@
 var io = require('socket.io');
 var http = require('http');
 var express = require('express');
+var user = require('./lib/user.js')
 var users = {};
 
 var app = express();
@@ -10,13 +11,13 @@ app.use(express.cookieParser('keyboard cat'));
 app.use(express.session());
 app.use(express.bodyParser());
 
-app.get('/game.html', function (req, res, next) {
-    if (!req.session.user_id) {
-        res.send('You are not authorized to view this page');
-    } else {
-        res.redirect('/index.html');
-    }
-});
+// app.get('/game.html', function (req, res, next) {
+//     if (!req.session.user_id) {
+//         res.redirect('/index.html');
+//     } else {
+//         next();
+//     }
+// });
 
 app.post('/index.html', function (req, res) {
   var post = req.body;
@@ -29,15 +30,7 @@ app.post('/index.html', function (req, res) {
   }
 });
 
-
 app.use(express.static(__dirname + "/public"));
-
-var user = function(id) {
-    this.id = id;
-    this.pos = [0,0];
-    this.si = 0;
-    return this;
-};
 
 io = io.listen(server);
 server.listen(8080);
