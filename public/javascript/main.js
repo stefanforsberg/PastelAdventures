@@ -55,7 +55,7 @@ function moveWithCheck(canGo, moveFunction) {
 
 function start() {
 
-   var displayCache = new gamejs.Surface([1280, 1280]);
+   var displayCache = new gamejs.Surface([2560, 1280]);
    var display = gamejs.display.setMode([640, 640]);
 
    gamejs.display.setCaption("Pastel Adventures");
