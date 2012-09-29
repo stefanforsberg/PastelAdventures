@@ -133,8 +133,6 @@ function main() {
    
    socket = io.connect('http://localhost:8080');
 
-   socket.socket.sessionid
-
    socket.on('connected', function (data) {
 
          for (var key in data.u) {
