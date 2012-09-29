@@ -21,7 +21,7 @@ var Tiles = exports.Tiles = function() {
 	this.tiles.push(new Tile(gamejs.image.load(shared.imagePath + "mountain_snow.png"), true));
 	this.tiles.push(new Tile(gamejs.image.load(shared.imagePath + "bridge1.png"), false));
 	this.tiles.push(new Tile(gamejs.image.load(shared.imagePath + "water_snow.png"), true));
-
+	this.tiles.push(new Tile(gamejs.image.load(shared.imagePath + "tree_chopped.png"), true));
 	return this;
 
 };

@@ -32,6 +32,6 @@ OtherChar.prototype.place = function(pos, si) {
 OtherChar.prototype.update = function(camPos) {
    var relativePos = gamejs.utils.vectors.subtract(this.pos, camPos);
 
-   this.rect = new gamejs.Rect(gamejs.utils.vectors.multiply(p, shared.tileSize));
+   this.rect = new gamejs.Rect(gamejs.utils.vectors.multiply(relativePos, shared.tileSize));
    this.image = this.sprites[this.spriteIndex];
 };

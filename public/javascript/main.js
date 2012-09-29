@@ -28,7 +28,8 @@ preloadImages([
    'bridge1.png',
    'snow.png',
    'mountain_snow.png',
-   'water_snow.png'
+   'water_snow.png',
+   'tree_chopped.png'
    ]);
 
 function preloadImages(images) {
@@ -53,23 +54,31 @@ function moveWithCheck(canGo, moveFunction) {
    }
 }
 
-function start() {
-
-   var displayCache = new gamejs.Surface([2560, 1280]);
-   var display = gamejs.display.setMode([640, 640]);
-
-   gamejs.display.setCaption("Pastel Adventures");
-   
-   var w = new world();
-   var c = new char([0, 0]);
-   var cam = new camera(w.size());
-   var t = new tiles();
-
+function drawWholeWorldToCached() {
    for (var x=0;x<w.width();x++) {
       for (var y=0; y<w.height(); y++) {
          displayCache.blit(t.tileAt(w.boardAt(x, y)), [x*shared.tileSize, y*shared.tileSize]);
       }
    }
+}
+
+var w;
+var t;
+var displayCache = new gamejs.Surface([2560, 1280]);
+
+function start(board) {
+
+   
+   var display = gamejs.display.setMode([640, 640]);
+
+   gamejs.display.setCaption("Pastel Adventures");
+   
+   w = new world(board);
+   var c = new char([0, 0]);
+   var cam = new camera(w.size());
+   t = new tiles();
+
+   drawWholeWorldToCached();
 
    display.blit(displayCache, new gamejs.Rect([0,0], [640, 640]), new gamejs.Rect([0,0], [640, 640]));
    
@@ -97,6 +106,15 @@ function start() {
             else if (event.key === gamejs.event.K_LEFT) {
                c.turnLeft();
                moveWithCheck(canGoTo(w,t,relativePos[0]-1, relativePos[1]), function() { c.moveLeft(); });
+            }
+            else if (event.key === gamejs.event.K_a) {
+               
+               var relativePointingPos = gamejs.utils.vectors.add(c.pointingPos(), cam.position());
+
+               socket.emit('a', 
+               { 
+                  p: relativePointingPos
+               });
             }
          }
 
@@ -143,7 +161,7 @@ function main() {
             users[key] = new otherChar(new gamejs.Rect(gamejs.utils.vectors.multiply(data.u[key].pos, shared.tileSize)), data.u[key].si);
          }
 
-         start();
+         start(data.b);
    });
 
    socket.on('otherConnected', function (data) {
@@ -158,6 +176,12 @@ function main() {
 
    socket.on('ocu', function (data) {
       users[data.u.id].place(data.u.pos, data.u.si);
+      update = true;
+   });
+
+   socket.on('worldChanged', function (data) {
+      w.setBoard(data.b);
+      drawWholeWorldToCached();
       update = true;
    });
 

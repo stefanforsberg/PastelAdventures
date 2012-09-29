@@ -65,4 +65,24 @@ Char.prototype.pos = function() {
    return [this.rect.left / shared.tileSize, this.rect.top / shared.tileSize];
 };
 
+Char.prototype.pointingPos = function() {
+   var si = this.spriteIndex;
+   var pointingPos;
+
+   if(si === 1) { 
+      pointingPos = [0,-1];
+   }
+   else if(si === 0) { 
+      pointingPos = [0,1];
+   }
+   else if(si === 3) { 
+      pointingPos = [-1,0];
+   }
+   else if(si === 2) { 
+      pointingPos = [1,0];
+   }
+
+   return gamejs.utils.vectors.add(this.pos(), pointingPos);
+};
+
 
