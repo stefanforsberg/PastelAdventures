@@ -80,23 +80,23 @@ function start() {
       gamejs.event.get().forEach(function(event) {
          if (event.type === gamejs.event.KEY_UP) {
 
-            var p = gamejs.utils.vectors.add(c.pos(), cam.position());
+            var relativePos = gamejs.utils.vectors.add(c.pos(), cam.position());
 
             if (event.key === gamejs.event.K_UP) {
                c.turnUp();
-               moveWithCheck(canGoTo(w,t,p[0], p[1]-1), function() { c.moveUp(); });
+               moveWithCheck(canGoTo(w,t,relativePos[0], relativePos[1]-1), function() { c.moveUp(); });
             }
             else if (event.key === gamejs.event.K_DOWN) {
                c.turnDown();
-               moveWithCheck(canGoTo(w,t,p[0], p[1]+1), function() { c.moveDown(); });
+               moveWithCheck(canGoTo(w,t,relativePos[0], relativePos[1]+1), function() { c.moveDown(); });
             }
             else if (event.key === gamejs.event.K_RIGHT) {
                c.turnRight();
-               moveWithCheck(canGoTo(w,t,p[0]+1, p[1]), function() { c.moveRight(); });
+               moveWithCheck(canGoTo(w,t,relativePos[0]+1, relativePos[1]), function() { c.moveRight(); });
             }
             else if (event.key === gamejs.event.K_LEFT) {
                c.turnLeft();
-               moveWithCheck(canGoTo(w,t,p[0]-1, p[1]), function() { c.moveLeft(); });
+               moveWithCheck(canGoTo(w,t,relativePos[0]-1, relativePos[1]), function() { c.moveLeft(); });
             }
          }
 
@@ -117,7 +117,10 @@ function start() {
          display.blit(displayCache, new gamejs.Rect([0,0], [640, 640]), new gamejs.Rect(cam.asPixelVector(), [640, 640]));
          
          for (var key in users) {
-            users[key].update();
+            
+            
+
+            users[key].update(cam.position());
             users[key].draw(display);
          }
 

@@ -17,7 +17,6 @@ Camera.prototype.asPixelVector = function() {
 };
 
 Camera.prototype.updatePosition = function(char) {
-    console.log(char.pos()[0] + " - " + this.sizeOfWorld[0])
 
     if(char.pos()[0] > 28 && this.pos[0] <= this.sizeOfWorld[0] - 41) {
         this.pos = $v.add(this.pos, [1,0]);   

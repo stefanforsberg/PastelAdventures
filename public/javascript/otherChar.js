@@ -14,6 +14,8 @@ var OtherChar = exports.OtherChar = function(rect, si) {
       gamejs.image.load(shared.imagePath + "char_o_l.png")
    ];
 
+   this.pos = [0,0];
+
    this.rect = rect;
    this.image = this.sprites[this.spriteIndex];
    
@@ -23,10 +25,13 @@ var OtherChar = exports.OtherChar = function(rect, si) {
 gamejs.utils.objects.extend(OtherChar, gamejs.sprite.Sprite);
 
 OtherChar.prototype.place = function(pos, si) {
+   this.pos = pos;
    this.spriteIndex = si;
-   this.rect = new gamejs.Rect(gamejs.utils.vectors.multiply(pos, shared.tileSize));
 };
 
-OtherChar.prototype.update = function() {
+OtherChar.prototype.update = function(camPos) {
+   var relativePos = gamejs.utils.vectors.subtract(this.pos, camPos);
+
+   this.rect = new gamejs.Rect(gamejs.utils.vectors.multiply(p, shared.tileSize));
    this.image = this.sprites[this.spriteIndex];
 };
