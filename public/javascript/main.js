@@ -29,7 +29,9 @@ preloadImages([
    'snow.png',
    'mountain_snow.png',
    'water_snow.png',
-   'tree_chopped.png'
+   'tree_chopped.png',
+   'stone_path.png',
+   'gravel_path.png'
    ]);
 
 function preloadImages(images) {

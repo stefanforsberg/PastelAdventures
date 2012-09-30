@@ -7,12 +7,37 @@
         body{
            background:#fff;
            color:#222;
-           margin:1em 0 2em 6em;
+           margin: 0;
            padding:0;
+           background-image: url('/images/straws.png');
+           background-repeat: repeat;
+        }
+
+        h1 {
+          font-family: asap, serif;
+          text-align: center;
+          color: #FF3374;
+          text-shadow: 0px 1px 0px #888;
+        }
+
+        canvas {
+          border: solid 1px #f3f3f3;
+        }
+
+        #main-container {
+          width: 640px;
+          text-align: center;
+          margin: auto;
+        }
+
+        #game-container {
+          text-align: left;
         }
         
     </style>
-<!-- Start javascript/main.js -->
+
+    <script src="http://use.edgefonts.net/asap.js"></script>
+
     <script src="./javascript/yabble.js"></script>
     <script src="./javascript/gamejs.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
@@ -24,10 +49,13 @@
 </head>
 <!-- Html -->
 <body>
-    <div>
-        
-        <canvas id="gjs-canvas"></canvas>
-        
+    <div id="main-container">
+        <div id="game-container">
+          <div id="header">
+            <h1>Pastel Adventures</h1>
+          </div>
+          <canvas id="gjs-canvas"></canvas>
+        </div>
     </div>
 </body>
 </html>
