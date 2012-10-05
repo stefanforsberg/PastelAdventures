@@ -8,6 +8,7 @@ var shared = require('shared');
 var socket;
 var users = {};
 var update = true;
+var charMoved = false;
 
 preloadImages([
    'grass.png', 
@@ -53,6 +54,7 @@ function moveWithCheck(canGo, moveFunction) {
    update = true;
    if(canGo) {
       moveFunction();
+      charMoved = true;
    }
 }
 
@@ -126,12 +128,15 @@ function start(board) {
       
       if(update) {
 
-         socket.emit('cu', 
-         { 
-            p: gamejs.utils.vectors.add(c.pos(), cam.position()),
-            r: c.rotation,
-            si: c.spriteIndex
-         });
+         // Other things besides char moving can trigger updates, for instance other people moving
+         if(charMoved) {
+            socket.emit('cu', 
+            { 
+               p: gamejs.utils.vectors.add(c.pos(), cam.position()),
+               r: c.rotation,
+               si: c.spriteIndex
+            });
+         }
 
          display.fill("#FFFFFF");
          display.blit(displayCache, new gamejs.Rect([0,0], [640, 640]), new gamejs.Rect(cam.asPixelVector(), [640, 640]));
@@ -148,6 +153,7 @@ function start(board) {
          c.draw(display);
 
          update = false;
+         charMoved = false;
       }
    }
 }
