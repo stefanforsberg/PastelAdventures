@@ -187,7 +187,10 @@ function main() {
       update = true;
    });
 
-}
+   socket.on('wood', function (data) {
+      $("#wood span").text(data.u.wood);
+   });
 
+}
 
 gamejs.ready(main);

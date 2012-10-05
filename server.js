@@ -49,7 +49,7 @@ io.sockets.on('connection', function (socket) {
     });
 
     socket.on('a', function (pos) {
-      if(world.action(pos.p[0], pos.p[1])) {
+      if(world.action(pos.p[0], pos.p[1], users[socket.id], socket)) {
         socket.emit('worldChanged', {b: world.board()});
         socket.broadcast.emit('worldChanged', {b: world.board()});
 
@@ -59,7 +59,6 @@ io.sockets.on('connection', function (socket) {
             socket.broadcast.emit('worldChanged', {b: world.board()});
           }
         }, 5000); 
-
       }
     });
 
