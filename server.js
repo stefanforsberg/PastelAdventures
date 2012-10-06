@@ -49,7 +49,10 @@ io.sockets.on('connection', function (socket) {
     });
 
     socket.on('a', function (pos) {
-      if(world.action(pos.p[0], pos.p[1], users[socket.id], socket)) {
+
+      var actionResult = world.action(pos.p[0], pos.p[1], users[socket.id], socket);
+
+      if(actionResult.a && actionResult.type === "wood") {
         socket.emit('worldChanged', {b: world.board()});
         socket.broadcast.emit('worldChanged', {b: world.board()});
 

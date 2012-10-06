@@ -142,9 +142,6 @@ function start(board) {
          display.blit(displayCache, new gamejs.Rect([0,0], [640, 640]), new gamejs.Rect(cam.asPixelVector(), [640, 640]));
          
          for (var key in users) {
-            
-            
-
             users[key].update(cam.position());
             users[key].draw(display);
          }
