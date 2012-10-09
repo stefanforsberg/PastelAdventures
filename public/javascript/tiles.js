@@ -16,7 +16,7 @@ var Tiles = exports.Tiles = function() {
 	this.tiles.push(new Tile(gamejs.image.load(shared.imagePath + "water_l.png"), true));
 	this.tiles.push(new Tile(gamejs.image.load(shared.imagePath + "dessert.png"), false));
 	this.tiles.push(new Tile(gamejs.image.load(shared.imagePath + "tree.png"), true));
-	this.tiles.push(new Tile(gamejs.image.load(shared.imagePath + "bridge.png"), false));
+	this.tiles.push(new Tile(gamejs.image.load(shared.imagePath + "bridge_v.png"), false));
 	this.tiles.push(new Tile(gamejs.image.load(shared.imagePath + "snow.png"), false));
 	this.tiles.push(new Tile(gamejs.image.load(shared.imagePath + "mountain_snow.png"), true));
 	this.tiles.push(new Tile(gamejs.image.load(shared.imagePath + "bridge1.png"), false));
@@ -24,6 +24,7 @@ var Tiles = exports.Tiles = function() {
 	this.tiles.push(new Tile(gamejs.image.load(shared.imagePath + "tree_chopped.png"), true));
 	this.tiles.push(new Tile(gamejs.image.load(shared.imagePath + "stone_path.png"), false));
 	this.tiles.push(new Tile(gamejs.image.load(shared.imagePath + "gravel_path.png"), false));
+	this.tiles.push(new Tile(gamejs.image.load(shared.imagePath + "stone_path_pillar.png"), true));
 	return this;
 };
 

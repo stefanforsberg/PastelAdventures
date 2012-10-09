@@ -9,6 +9,9 @@ var socket;
 var users = {};
 var update = true;
 var charMoved = false;
+var w;
+var t;
+var displayCache = new gamejs.Surface([2560, 1280]);
 
 preloadImages([
    'grass.png', 
@@ -25,21 +28,21 @@ preloadImages([
    'char_o_u.png', 
    'char_o_r.png', 
    'char_o_l.png',   
-   'bridge.png',
+   'bridge_v.png',
    'bridge1.png',
    'snow.png',
    'mountain_snow.png',
    'water_snow.png',
    'tree_chopped.png',
    'stone_path.png',
-   'gravel_path.png'
+   'gravel_path.png',
+   'stone_path_pillar.png'
    ]);
 
 function preloadImages(images) {
    var imagesWithPath = [];
 
    for(var i = 0; i < images.length; i++) {
-      console.log(i);
       imagesWithPath.push(shared.imagePath + images[i]);
    }
 
@@ -65,10 +68,6 @@ function drawWholeWorldToCached() {
       }
    }
 }
-
-var w;
-var t;
-var displayCache = new gamejs.Surface([2560, 1280]);
 
 function start(board) {
 
@@ -164,6 +163,7 @@ function main() {
          for (var key in data.u) {
             if(key === socket.socket.sessionid) continue;
             users[key] = new otherChar(new gamejs.Rect(gamejs.utils.vectors.multiply(data.u[key].pos, shared.tileSize)), data.u[key].si);
+            users[key].place(data.u[key].pos, data.u[key].si);
          }
 
          start(data.b);

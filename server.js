@@ -50,12 +50,13 @@ io.sockets.on('connection', function (socket) {
 
     socket.on('a', function (pos) {
 
-      var actionResult = world.action(pos.p[0], pos.p[1]);
+      var user = users[socket.id];
+      var actionResult = world.action(pos.p[0], pos.p[1], user);
 
-      if(actionResult.a && actionResult.type === "wood") {
+      if(actionResult.a && actionResult.type === "wood") {  
 
-        users[socket.id].IncreaseWoodAmount();
-        socket.emit('wood', {u: users[socket.id]});
+        user.IncreaseWoodAmount();
+        socket.emit('wood', {u: user});
         socket.emit('worldChanged', {b: world.board()});
         socket.broadcast.emit('worldChanged', {b: world.board()});
 
@@ -66,6 +67,15 @@ io.sockets.on('connection', function (socket) {
           }
         }, 5000); 
       }
+
+      if(actionResult.a && actionResult.type === "bridge") {
+        user.BuildBridge();
+
+        socket.emit('wood', {u: user});
+        socket.emit('worldChanged', {b: world.board()});
+        socket.broadcast.emit('worldChanged', {b: world.board()});
+      }  
+
     });
 
     socket.on('cu', function (data) {
