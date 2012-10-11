@@ -18,6 +18,7 @@ preloadImages([
    'mountain.png', 
    'water.png', 
    'water_l.png', 
+   'water_l_b.png',
    'dessert.png', 
    'tree.png', 
    'char_d.png', 
