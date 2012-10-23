@@ -29,6 +29,10 @@ var Tiles = exports.Tiles = function() {
 	this.tiles.push(new Tile(gamejs.image.load(shared.imagePath + "tree_massive.png"), true));
 	this.tiles.push(new Tile(gamejs.image.load(shared.imagePath + "tree_massive_b.png"), true));
 	this.tiles.push(new Tile(gamejs.image.load(shared.imagePath + "tree_massive_l.png"), true));
+	this.tiles.push(new Tile(gamejs.image.load(shared.imagePath + "water_t.png"), true));
+	this.tiles.push(new Tile(gamejs.image.load(shared.imagePath + "water_l_t.png"), true));
+	this.tiles.push(new Tile(gamejs.image.load(shared.imagePath + "water_r.png"), true));
+	this.tiles.push(new Tile(gamejs.image.load(shared.imagePath + "water_b.png"), true));
 	return this;
 };
 

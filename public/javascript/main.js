@@ -40,7 +40,11 @@ preloadImages([
    'stone_path_pillar.png',
    'tree_massive.png',
    'tree_massive_b.png',
-   'tree_massive_l.png'
+   'tree_massive_l.png',
+   'water_t.png',
+   'water_l_t.png',
+   'water_r.png',
+   'water_b.png'
    ]);
 
 function preloadImages(images) {
