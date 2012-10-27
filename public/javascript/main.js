@@ -12,6 +12,7 @@ var charMoved = false;
 var w;
 var t;
 var displayCache = new gamejs.Surface([2560, 1280]);
+var tmxDisplay;
 
 preloadImages([
    'grass.png', 
@@ -44,7 +45,7 @@ preloadImages([
    'water_t.png',
    'water_l_t.png',
    'water_r.png',
-   'water_b.png'
+   'water_b.png',
    ]);
 
 function preloadImages(images) {
@@ -53,6 +54,9 @@ function preloadImages(images) {
    for(var i = 0; i < images.length; i++) {
       imagesWithPath.push(shared.imagePath + images[i]);
    }
+
+   // tmx map uses a different key
+   imagesWithPath.push("./" + shared.imagePath + "map_sprites.png");
 
    gamejs.preload(imagesWithPath);
 }
@@ -70,11 +74,58 @@ function moveWithCheck(canGo, moveFunction) {
 }
 
 function drawWholeWorldToCached() {
+
+   var map = new gamejs.tmx.Map('images/map.tmx');
+
+   displayCache = new gamejs.Surface(map.width * map.tileWidth, map.height * map.tileHeight);
+   
+   var maplayer = map.layers[0];
+
+   maplayer.gids.forEach(function(row, i) {
+      row.forEach(function(gid, j) {
+         if (gid ===0) return;
+
+         var tileSurface = map.tiles.getSurface(gid);
+         if (tileSurface) {
+            displayCache.blit(tileSurface, new gamejs.Rect([j * map.tileWidth, i * map.tileHeight], [map.tileWidth, map.tileHeight])
+            );
+         } 
+         else {
+            gamejs.log('no gid ', gid, i, j, 'layer', i);
+         }
+      }, this);
+   }, this);
+
    for (var x=0;x<w.width();x++) {
       for (var y=0; y<w.height(); y++) {
-         displayCache.blit(t.tileAt(w.boardAt(x, y)), [x*shared.tileSize, y*shared.tileSize]);
+         if(w.boardAt(x, y) !== 0) {
+            displayCache.blit(t.tileAt(w.boardAt(x, y)), [x*shared.tileSize, y*shared.tileSize]);
+         };
       }
    }
+}
+
+function drawTmx() {
+   var map = new gamejs.tmx.Map('images/map.tmx');
+
+   tmxDisplay = new gamejs.Surface(map.width * map.tileWidth, map.height * map.tileHeight);
+   
+   var maplayer = map.layers[0];
+
+   maplayer.gids.forEach(function(row, i) {
+      row.forEach(function(gid, j) {
+         if (gid ===0) return;
+
+         var tileSurface = map.tiles.getSurface(gid);
+         if (tileSurface) {
+            tmxDisplay.blit(tileSurface, new gamejs.Rect([j * map.tileWidth, i * map.tileHeight], [map.tileWidth, map.tileHeight])
+            );
+         } 
+         else {
+            gamejs.log('no gid ', gid, i, j, 'layer', i);
+         }
+      }, this);
+   }, this);
 }
 
 function start(board) {
@@ -90,6 +141,7 @@ function start(board) {
    t = new tiles();
 
    drawWholeWorldToCached();
+   //drawTmx();
 
    display.blit(displayCache, new gamejs.Rect([0,0], [640, 640]), new gamejs.Rect([0,0], [640, 640]));
    
