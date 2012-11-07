@@ -55,7 +55,7 @@ io.sockets.on('connection', function (socket) {
 
       if(actionResult.a && actionResult.type === "wood") {  
 
-        user.IncreaseWoodAmount();
+        user.increaseWoodAmount();
         socket.emit('wood', {u: user});
         socket.emit('worldChanged', {b: world.board()});
         socket.broadcast.emit('worldChanged', {b: world.board()});
@@ -69,7 +69,7 @@ io.sockets.on('connection', function (socket) {
       }
 
       if(actionResult.a && actionResult.type === "bridge") {
-        user.BuildBridge();
+        user.buildBridge();
 
         socket.emit('wood', {u: user});
         socket.emit('worldChanged', {b: world.board()});
