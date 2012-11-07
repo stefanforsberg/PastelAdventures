@@ -2,7 +2,7 @@ var io = require('socket.io');
 var http = require('http');
 var express = require('express');
 var user = require('./lib/user.js');
-var world = require('./lib/world.js');
+var world = require('./lib/world.js').World;
 var users = {};
 
 var app = express();
@@ -49,33 +49,8 @@ io.sockets.on('connection', function (socket) {
     });
 
     socket.on('a', function (pos) {
-
       var user = users[socket.id];
-      var actionResult = world.action(pos.p[0], pos.p[1], user);
-
-      if(actionResult.a && actionResult.type === "wood") {  
-
-        user.increaseWoodAmount();
-        socket.emit('wood', {u: user});
-        socket.emit('worldChanged', {b: world.board()});
-        socket.broadcast.emit('worldChanged', {b: world.board()});
-
-        setTimeout(function() { 
-          if(world.noneUserAction(pos.p[0], pos.p[1])) {
-            socket.emit('worldChanged', {b: world.board()});
-            socket.broadcast.emit('worldChanged', {b: world.board()});
-          }
-        }, 5000); 
-      }
-
-      if(actionResult.a && actionResult.type === "bridge") {
-        user.buildBridge();
-
-        socket.emit('wood', {u: user});
-        socket.emit('worldChanged', {b: world.board()});
-        socket.broadcast.emit('worldChanged', {b: world.board()});
-      }  
-
+      world.Events.action(pos.p, user, socket);
     });
 
     socket.on('cu', function (data) {
