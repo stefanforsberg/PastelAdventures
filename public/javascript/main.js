@@ -11,7 +11,8 @@ var update = true;
 var charMoved = false;
 var w;
 var t;
-var displayCache = new gamejs.Surface([2560, 1280]);
+var tmxDisplayCache;
+var displayCache;
 var tmxDisplay;
 
 preloadImages([
@@ -73,10 +74,11 @@ function moveWithCheck(canGo, moveFunction) {
    }
 }
 
-function drawWholeWorldToCached() {
+function cacheTmxMap() {
 
    var map = new gamejs.tmx.Map('images/map.tmx');
 
+   tmxDisplayCache = new gamejs.Surface(map.width * map.tileWidth, map.height * map.tileHeight);
    displayCache = new gamejs.Surface(map.width * map.tileWidth, map.height * map.tileHeight);
    
    var maplayer = map.layers[0];
@@ -87,7 +89,7 @@ function drawWholeWorldToCached() {
 
          var tileSurface = map.tiles.getSurface(gid);
          if (tileSurface) {
-            displayCache.blit(tileSurface, new gamejs.Rect([j * map.tileWidth, i * map.tileHeight], [map.tileWidth, map.tileHeight])
+            tmxDisplayCache.blit(tileSurface, new gamejs.Rect([j * map.tileWidth, i * map.tileHeight], [map.tileWidth, map.tileHeight])
             );
          } 
          else {
@@ -95,6 +97,11 @@ function drawWholeWorldToCached() {
          }
       }, this);
    }, this);
+}
+
+function drawObjects() {
+
+   displayCache.blit(tmxDisplayCache);
 
    for (var x=0;x<w.width();x++) {
       for (var y=0; y<w.height(); y++) {
@@ -103,29 +110,6 @@ function drawWholeWorldToCached() {
          };
       }
    }
-}
-
-function drawTmx() {
-   var map = new gamejs.tmx.Map('images/map.tmx');
-
-   tmxDisplay = new gamejs.Surface(map.width * map.tileWidth, map.height * map.tileHeight);
-   
-   var maplayer = map.layers[0];
-
-   maplayer.gids.forEach(function(row, i) {
-      row.forEach(function(gid, j) {
-         if (gid ===0) return;
-
-         var tileSurface = map.tiles.getSurface(gid);
-         if (tileSurface) {
-            tmxDisplay.blit(tileSurface, new gamejs.Rect([j * map.tileWidth, i * map.tileHeight], [map.tileWidth, map.tileHeight])
-            );
-         } 
-         else {
-            gamejs.log('no gid ', gid, i, j, 'layer', i);
-         }
-      }, this);
-   }, this);
 }
 
 function start(board) {
@@ -140,8 +124,8 @@ function start(board) {
    var cam = new camera(w.size());
    t = new tiles();
 
-   drawWholeWorldToCached();
-   //drawTmx();
+   cacheTmxMap();
+   drawObjects();
 
    display.blit(displayCache, new gamejs.Rect([0,0], [640, 640]), new gamejs.Rect([0,0], [640, 640]));
    
@@ -197,6 +181,8 @@ function start(board) {
             });
          }
 
+
+
          display.fill("#FFFFFF");
          display.blit(displayCache, new gamejs.Rect([0,0], [640, 640]), new gamejs.Rect(cam.asPixelVector(), [640, 640]));
          
@@ -246,7 +232,7 @@ function main() {
 
    socket.on('worldChanged', function (data) {
       w.setBoard(data.b);
-      drawWholeWorldToCached();
+      drawObjects();
       update = true;
    });
 
