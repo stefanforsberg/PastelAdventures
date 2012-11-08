@@ -231,7 +231,7 @@ function main() {
    });
 
    socket.on('worldChanged', function (data) {
-      w.setBoard(data.b);
+      w.setBoardAt(data.x, data.y, data.v);
       drawObjects();
       update = true;
    });

@@ -19,6 +19,10 @@ World.prototype.height = function() {
 	return this.board.length;
 };
 
+World.prototype.setBoardAt = function(x, y, v) {
+	this.board[y][x] = v;
+};
+
 World.prototype.boardAt = function(x, y) {
 	return this.board[y][x];
 };
