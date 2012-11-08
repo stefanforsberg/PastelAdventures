@@ -1,9 +1,7 @@
 var io = require('socket.io');
 var http = require('http');
 var express = require('express');
-var user = require('./lib/user.js');
 var world = require('./lib/world.js').World;
-var users = {};
 
 var app = express();
 var server = http.createServer(app);
@@ -38,25 +36,17 @@ server.listen(8080);
 
 io.sockets.on('connection', function (socket) {
     
-    users[socket.id] = new user(socket.id);
-
-    socket.emit('connected', {u: users, b: world.board()});
-    socket.broadcast.emit('otherConnected', {u: users[socket.id]});
+    world.Events.connected(socket);
 
     socket.on('disconnect', function () {
-        delete users[socket.id];
-        socket.broadcast.emit('disconnected', {id: socket.id});
+        world.Events.disconnected(socket);
     });
 
     socket.on('a', function (pos) {
-      var user = users[socket.id];
-      world.Events.action(pos.p, user, socket);
+      world.Events.action(socket, pos.p);
     });
 
     socket.on('cu', function (data) {
-        users[socket.id].pos = data.p;
-        users[socket.id].si = data.si;
-        
-        socket.broadcast.emit('ocu', {u: users[socket.id]});
+        world.Events.moved(socket, data)
     });
 });
