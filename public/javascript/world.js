@@ -1,14 +1,19 @@
 var World = exports.World = function(board) {
 	this.board = board;
+	this.width = 0;
+	this.height = 0;
+	console.log(board);
 	return this;
+
 };
 
 World.prototype.setBoard = function(board) {
 	this.board = board;
+
 };
 
 World.prototype.size = function() {
-	return [this.board[0].length, this.board.length];
+	return [this.width, this.height];
 };
 
 World.prototype.width = function() {
@@ -20,13 +25,13 @@ World.prototype.height = function() {
 };
 
 World.prototype.setBoardAt = function(x, y, v) {
-	this.board[y][x] = v;
+	this.board["t" + x + "x" + y] = v;
 };
 
 World.prototype.boardAt = function(x, y) {
-	return this.board[y][x];
+	return this.board["t" + x + "x" + y];
 };
 
 World.prototype.canGoTo = function(x, y) {
-	return (typeof this.board[y] !== "undefined" && typeof this.board[y][x] !== "undefined");
+	return (x >= 0 && x < this.width && y >= 0 && y < this.height);
 };

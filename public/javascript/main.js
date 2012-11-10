@@ -77,6 +77,8 @@ function moveWithCheck(canGo, moveFunction) {
 function cacheTmxMap() {
 
    var map = new gamejs.tmx.Map('images/map.tmx');
+   w.width = map.width;
+   w.height = map.height;
 
    tmxDisplayCache = new gamejs.Surface(map.width * map.tileWidth, map.height * map.tileHeight);
    displayCache = new gamejs.Surface(map.width * map.tileWidth, map.height * map.tileHeight);
@@ -103,9 +105,10 @@ function drawObjects() {
 
    displayCache.blit(tmxDisplayCache);
 
-   for (var x=0;x<w.width();x++) {
-      for (var y=0; y<w.height(); y++) {
-         if(w.boardAt(x, y) !== 0) {
+   for (var x=0;x<w.width;x++) {
+      for (var y=0; y<w.height; y++) {
+         if(w.boardAt(x, y) !== undefined) {
+            console.log("kommer");
             displayCache.blit(t.tileAt(w.boardAt(x, y)), [x*shared.tileSize, y*shared.tileSize]);
          };
       }
@@ -121,11 +124,13 @@ function start(board) {
    
    w = new world(board);
    var c = new char([0, 0]);
-   var cam = new camera(w.size());
+
    t = new tiles();
 
    cacheTmxMap();
    drawObjects();
+
+   var cam = new camera(w.size());
 
    display.blit(displayCache, new gamejs.Rect([0,0], [640, 640]), new gamejs.Rect([0,0], [640, 640]));
    

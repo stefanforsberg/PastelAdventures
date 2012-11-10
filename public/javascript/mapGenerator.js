@@ -6,31 +6,29 @@ function drawTmx() {
 
    var maplayer = map.layers[1];
 
-   var mapArray = "<pre><br />var board = [<br/>";
+   var mapArray = "<pre><br />var board = {<br/>&nbsp;&nbsp;";
    var currentRow;
 
    maplayer.gids.forEach(function(row, i) {
 
-      mapArray += "["
-
       row.forEach(function(gid, j) {
 
          if (gid ===0) {
-            mapArray += "0 ,";   
+            //mapArray += "0 ,";   
             return;
          }
 
          var tileSurface = map.tiles.getSurface(gid);
          if (tileSurface) {
-            
-            console.log(gid.toString().length);
+                        
+            currentRow = "t" + j + "x" + i + ": " + gid + ", ";  
 
-            if(gid.toString().length === 1) {
-               currentRow = gid + " ,";  
-            }
-            else {
-               currentRow = gid + ",";  
-            }
+            // if(gid.toString().length === 1) {
+            //    currentRow = gid + " ,";  
+            // }
+            // else {
+            //    currentRow = gid + ",";  
+            // }
          } 
          else {
 
@@ -41,12 +39,13 @@ function drawTmx() {
 
       }, this);
 
-      mapArray = mapArray.substring(0, mapArray.length - 1);
-      mapArray += "],<br />"
+      // mapArray = mapArray.substring(0, mapArray.length - 1);
+      // mapArray += "],<br />"
 
    }, this);
 
-   mapArray += "];<br /></pre>";
+   mapArray = mapArray.substring(0, mapArray.length - 2);
+   mapArray += "<br />};</pre>";
 
    var txt=document.getElementById("code")
    txt.innerHTML = mapArray;
