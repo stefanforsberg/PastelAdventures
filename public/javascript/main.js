@@ -16,12 +16,7 @@ var displayCache;
 var tmxDisplay;
 
 preloadImages([
-   'grass.png', 
    'mountain.png', 
-   'water.png', 
-   'water_l.png', 
-   'water_l_b.png',
-   'dessert.png', 
    'tree.png', 
    'char_d.png', 
    'char_u.png', 
@@ -31,22 +26,7 @@ preloadImages([
    'char_o_u.png', 
    'char_o_r.png', 
    'char_o_l.png',   
-   'bridge_v.png',
-   'bridge1.png',
-   'snow.png',
-   'mountain_snow.png',
-   'water_snow.png',
    'tree_chopped.png',
-   'stone_path.png',
-   'gravel_path.png',
-   'stone_path_pillar.png',
-   'tree_massive.png',
-   'tree_massive_b.png',
-   'tree_massive_l.png',
-   'water_t.png',
-   'water_l_t.png',
-   'water_r.png',
-   'water_b.png',
    ]);
 
 function preloadImages(images) {
