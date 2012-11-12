@@ -1,7 +1,6 @@
 var io = require('socket.io');
 var http = require('http');
 var express = require('express');
-var world = require('./lib/world.js').World;
 
 var app = express();
 var server = http.createServer(app);
@@ -34,19 +33,5 @@ app.use(express.static(__dirname + "/public"));
 io = io.listen(server);
 server.listen(8080);
 
-io.sockets.on('connection', function (socket) {
-    
-    world.Events.connected(socket);
+require('./lib/world.js').World(io);
 
-    socket.on('disconnect', function () {
-        world.Events.disconnected(socket);
-    });
-
-    socket.on('a', function (pos) {
-      world.Events.action(socket, pos.p);
-    });
-
-    socket.on('cu', function (data) {
-        world.Events.moved(socket, data)
-    });
-});
