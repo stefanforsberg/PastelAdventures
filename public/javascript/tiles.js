@@ -3,16 +3,20 @@ var shared = require('shared');
 
 var Tiles = exports.Tiles = function() {
 
-	var Tile = function(img, blocks) {
-		this.img = img;
+	var Tile = function(blocks, img) {
+		if(img) {
+			this.img = gamejs.image.load(shared.imagePath + img);
+		}
+
 		this.blocks = blocks;
 	};
 
 	this.tiles = {};
 
-	this.tiles[3] = new Tile(gamejs.image.load(shared.imagePath + "mountain.png"), true);
-	this.tiles[4] = new Tile(gamejs.image.load(shared.imagePath + "tree.png"), true);
-	this.tiles[5] = new Tile(gamejs.image.load(shared.imagePath + "tree_chopped.png"), true);
+	this.tiles[3] = new Tile(true, "mountain.png");
+	this.tiles[4] = new Tile(true, "tree.png");
+	this.tiles[5] = new Tile(true, "tree_chopped.png");
+	this.tiles[33] = new Tile(true);
 	return this;
 };
 

@@ -63,22 +63,25 @@ function cacheTmxMap() {
    tmxDisplayCache = new gamejs.Surface(map.width * map.tileWidth, map.height * map.tileHeight);
    displayCache = new gamejs.Surface(map.width * map.tileWidth, map.height * map.tileHeight);
    
-   var maplayer = map.layers[0];
 
-   maplayer.gids.forEach(function(row, i) {
-      row.forEach(function(gid, j) {
-         if (gid ===0) return;
+   for(var layer = 0; layer < 2; layer++) {
+      var maplayer = map.layers[layer];
 
-         var tileSurface = map.tiles.getSurface(gid);
-         if (tileSurface) {
-            tmxDisplayCache.blit(tileSurface, new gamejs.Rect([j * map.tileWidth, i * map.tileHeight], [map.tileWidth, map.tileHeight])
-            );
-         } 
-         else {
-            gamejs.log('no gid ', gid, i, j, 'layer', i);
-         }
+      maplayer.gids.forEach(function(row, i) {
+         row.forEach(function(gid, j) {
+            if (gid ===0) return;
+
+            var tileSurface = map.tiles.getSurface(gid);
+            if (tileSurface) {
+               tmxDisplayCache.blit(tileSurface, new gamejs.Rect([j * map.tileWidth, i * map.tileHeight], [map.tileWidth, map.tileHeight])
+               );
+            } 
+            else {
+               gamejs.log('no gid ', gid, i, j, 'layer', i);
+            }
+         }, this);
       }, this);
-   }, this);
+   }
 }
 
 function drawObjects() {
@@ -88,8 +91,8 @@ function drawObjects() {
    for (var x=0;x<w.width;x++) {
       for (var y=0; y<w.height; y++) {
          if(w.boardAt(x, y) !== undefined) {
-            console.log("kommer");
-            displayCache.blit(t.tileAt(w.boardAt(x, y)), [x*shared.tileSize, y*shared.tileSize]);
+            var tile = t.tiles[w.boardAt(x, y)];            
+            if(tile.img) displayCache.blit(tile.img, [x*shared.tileSize, y*shared.tileSize]);
          };
       }
    }

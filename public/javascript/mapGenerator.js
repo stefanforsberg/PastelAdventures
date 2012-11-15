@@ -4,7 +4,7 @@ gamejs.preload(['./images/map_sprites.png']);
 function drawTmx() {
    var map = new gamejs.tmx.Map('images/map.tmx');
 
-   var maplayer = map.layers[1];
+   var maplayer = map.layers[2];
 
    var mapArray = "<pre><br />var board = {<br/>&nbsp;&nbsp;";
    var currentRow;
@@ -14,7 +14,6 @@ function drawTmx() {
       row.forEach(function(gid, j) {
 
          if (gid ===0) {
-            //mapArray += "0 ,";   
             return;
          }
 
@@ -22,13 +21,6 @@ function drawTmx() {
          if (tileSurface) {
                         
             currentRow = "t" + j + "x" + i + ": " + gid + ", ";  
-
-            // if(gid.toString().length === 1) {
-            //    currentRow = gid + " ,";  
-            // }
-            // else {
-            //    currentRow = gid + ",";  
-            // }
          } 
          else {
 
@@ -38,9 +30,6 @@ function drawTmx() {
          mapArray += currentRow;
 
       }, this);
-
-      // mapArray = mapArray.substring(0, mapArray.length - 1);
-      // mapArray += "],<br />"
 
    }, this);
 
