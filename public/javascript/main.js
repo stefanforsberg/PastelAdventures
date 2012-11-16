@@ -27,6 +27,7 @@ preloadImages([
    'char_o_r.png', 
    'char_o_l.png',   
    'tree_chopped.png',
+   'bridge_v.png',
    ]);
 
 function preloadImages(images) {
@@ -91,8 +92,13 @@ function drawObjects() {
    for (var x=0;x<w.width;x++) {
       for (var y=0; y<w.height; y++) {
          if(w.boardAt(x, y) !== undefined) {
-            var tile = t.tiles[w.boardAt(x, y)];            
-            if(tile.img) displayCache.blit(tile.img, [x*shared.tileSize, y*shared.tileSize]);
+            var tile = t.tiles[w.boardAt(x, y)]; 
+            if(tile) {
+               if(tile.img) displayCache.blit(tile.img, [x*shared.tileSize, y*shared.tileSize]);
+            }
+            else {
+               gamejs.log('no tile ', w.boardAt(x, y));  
+            }
          };
       }
    }
@@ -168,8 +174,6 @@ function start(board) {
                si: c.spriteIndex
             });
          }
-
-
 
          display.fill("#FFFFFF");
          display.blit(displayCache, new gamejs.Rect([0,0], [640, 640]), new gamejs.Rect(cam.asPixelVector(), [640, 640]));

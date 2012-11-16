@@ -2,7 +2,6 @@ var World = exports.World = function(board) {
 	this.board = board;
 	this.width = 0;
 	this.height = 0;
-	console.log(board);
 	return this;
 
 };

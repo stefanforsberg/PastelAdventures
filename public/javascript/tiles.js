@@ -17,6 +17,7 @@ var Tiles = exports.Tiles = function() {
 	this.tiles[4] = new Tile(true, "tree.png");
 	this.tiles[5] = new Tile(true, "tree_chopped.png");
 	this.tiles[33] = new Tile(true);
+	this.tiles[34] = new Tile(false, 'bridge_v.png');
 	return this;
 };
 
