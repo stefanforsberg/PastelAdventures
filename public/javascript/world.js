@@ -3,24 +3,10 @@ var World = exports.World = function(board) {
 	this.width = 0;
 	this.height = 0;
 	return this;
-
-};
-
-World.prototype.setBoard = function(board) {
-	this.board = board;
-
 };
 
 World.prototype.size = function() {
 	return [this.width, this.height];
-};
-
-World.prototype.width = function() {
-	return this.board[0].length;
-};
-
-World.prototype.height = function() {
-	return this.board.length;
 };
 
 World.prototype.setBoardAt = function(x, y, v) {

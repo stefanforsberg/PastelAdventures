@@ -65,7 +65,7 @@ function cacheTmxMap() {
    displayCache = new gamejs.Surface(map.width * map.tileWidth, map.height * map.tileHeight);
    
 
-   for(var layer = 0; layer < 2; layer++) {
+   for(var layer = 0; layer < 3; layer++) {
       var maplayer = map.layers[layer];
 
       maplayer.gids.forEach(function(row, i) {
@@ -105,15 +105,11 @@ function drawObjects() {
 }
 
 function start(board) {
-
-   
    var display = gamejs.display.setMode([640, 640]);
-
    gamejs.display.setCaption("Pastel Adventures");
    
    w = new world(board);
    var c = new char([0, 0]);
-
    t = new tiles();
 
    cacheTmxMap();

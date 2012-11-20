@@ -4,7 +4,7 @@ gamejs.preload(['./images/map_sprites.png']);
 function drawTmx() {
    var map = new gamejs.tmx.Map('images/map.tmx');
 
-   var maplayer = map.layers[2];
+   var maplayer = map.layers[3];
 
    var mapArray = "<pre><br />var board = {<br/>&nbsp;&nbsp;";
    var currentRow;
