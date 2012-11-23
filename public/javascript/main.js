@@ -5,6 +5,7 @@ var world = require('world').World;
 var tiles = require('tiles').Tiles;
 var camera = require('camera').Camera;
 var shared = require('shared');
+var weather = require('weather').Weather;
 var socket;
 var users = {};
 var update = true;
@@ -63,7 +64,6 @@ function cacheTmxMap() {
 
    tmxDisplayCache = new gamejs.Surface(map.width * map.tileWidth, map.height * map.tileHeight);
    displayCache = new gamejs.Surface(map.width * map.tileWidth, map.height * map.tileHeight);
-   
 
    for(var layer = 0; layer < 3; layer++) {
       var maplayer = map.layers[layer];
@@ -106,6 +106,7 @@ function drawObjects() {
 
 function start(board) {
    var display = gamejs.display.setMode([640, 640]);
+   var displayStatic = displayCache = new gamejs.Surface(640, 640);;
    gamejs.display.setCaption("Pastel Adventures");
    
    w = new world(board);
@@ -117,14 +118,16 @@ function start(board) {
 
    var cam = new camera(w.size());
 
-   display.blit(displayCache, new gamejs.Rect([0,0], [640, 640]), new gamejs.Rect([0,0], [640, 640]));
+   weather.startRain();
+
+   displayStatic.blit(displayCache, new gamejs.Rect([0,0], [640, 640]), new gamejs.Rect([0,0], [640, 640]));
    
    gamejs.time.fpsCallback(tick, this, 30);
 
    function tick(msDuration) {
 
       gamejs.event.get().forEach(function(event) {
-         if (event.type === gamejs.event.KEY_UP) {
+         if (event.type === gamejs.event.KEY_DOWN) {
 
             var relativePos = gamejs.utils.vectors.add(c.pos(), cam.position());
 
@@ -153,6 +156,9 @@ function start(board) {
                   p: relativePointingPos
                });
             }
+            else if (event.key === gamejs.event.K_r) {
+               weather.toggleRain();
+            }
          }
 
          cam.updatePosition(c);
@@ -171,20 +177,29 @@ function start(board) {
             });
          }
 
-         display.fill("#FFFFFF");
-         display.blit(displayCache, new gamejs.Rect([0,0], [640, 640]), new gamejs.Rect(cam.asPixelVector(), [640, 640]));
-         
+         displayStatic.fill("#FFFFFF");
+         displayStatic.blit(displayCache, new gamejs.Rect([0,0], [640, 640]), new gamejs.Rect(cam.asPixelVector(), [640, 640]));
+
          for (var key in users) {
             users[key].update(cam.position());
-            users[key].draw(display);
+            users[key].draw(displayStatic);
          }
 
          c.update();
-         c.draw(display);
+         c.draw(displayStatic);
 
          update = false;
          charMoved = false;
       }
+
+      display.fill("#FFFFFF");
+      display.blit(displayStatic);
+
+      weather.draw(display);
+
+      // for (var drop = 0; drop < rain.length; drop++) {
+      //    rain[drop].draw(display);
+      // }
    }
 }
 
