@@ -36,7 +36,7 @@ function drawTmx() {
    mapArray = mapArray.substring(0, mapArray.length - 2);
    mapArray += "<br />};</pre>";
 
-   var txt=document.getElementById("code")
+   var txt=document.getElementById("code");
    txt.innerHTML = mapArray;
 }
 

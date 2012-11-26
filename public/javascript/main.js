@@ -28,7 +28,7 @@ preloadImages([
    'char_o_r.png', 
    'char_o_l.png',   
    'tree_chopped.png',
-   'bridge_v.png',
+   'bridge_v.png'
    ]);
 
 function preloadImages(images) {
@@ -99,14 +99,15 @@ function drawObjects() {
             else {
                gamejs.log('no tile ', w.boardAt(x, y));  
             }
-         };
+         }
       }
    }
 }
 
 function start(board) {
    var display = gamejs.display.setMode([640, 640]);
-   var displayStatic = displayCache = new gamejs.Surface(640, 640);;
+   var displayStatic = new gamejs.Surface(640, 640);
+
    gamejs.display.setCaption("Pastel Adventures");
    
    w = new world(board);
