@@ -196,10 +196,6 @@ function start(board) {
       display.blit(displayStatic);
 
       weather.draw(display);
-
-      // for (var drop = 0; drop < rain.length; drop++) {
-      //    rain[drop].draw(display);
-      // }
    }
 }
 
@@ -242,7 +238,6 @@ function main() {
    socket.on('wood', function (data) {
       $("#wood span").text(data.u.wood);
    });
-
 }
 
 gamejs.ready(main);

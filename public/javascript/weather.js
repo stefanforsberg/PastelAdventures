@@ -7,7 +7,7 @@ exports.Weather = {
 	weatherEffects: [],
 
 	startRain: function() {
-		for(var i = 0; i < 500; i++) this.weatherEffects.push(new rainDrop());
+		for(var i = 0; i < 200; i++) this.weatherEffects.push(new rainDrop());
 		this.isRaining = true;
 	},
 
@@ -31,7 +31,6 @@ exports.Weather = {
 };
 
 var rainDrop = function() {
-   
    this.xStart = Math.floor((Math.random()*1000)+1);
    this.x = this.xStart;
    this.yEnd = Math.floor(150+(Math.random()*650)+1);
@@ -64,4 +63,3 @@ rainDrop.prototype.draw = function(display) {
 		this.x = 75 + this.xStart-this.y/4; 
 	}
 };
-

@@ -34,4 +34,3 @@ io = io.listen(server);
 server.listen(8080);
 
 require('./lib/world.js').World(io);
-
