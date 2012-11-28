@@ -2,6 +2,8 @@ var gamejs = require('gamejs');
 var t = require('tiles').Tiles;
 var shared = require('shared');
 
+var gameSizeRect = new gamejs.Rect([0,0], [640, 640]);
+
 var World = exports.World = function(board) {
 	this.board = board;
 
@@ -17,7 +19,24 @@ var World = exports.World = function(board) {
 	this.surfaces.displayCache = map.displayCache;
 	this.surfaces.displayStatic = new gamejs.Surface(640, 640);
 
+	this.surfaces.displayStatic.blit(this.surfaces.displayCache, gameSizeRect, gameSizeRect);
+
+	this.drawObjects();
+
 	return this;
+};
+
+World.prototype.updateStaticDisplay = function(cam, users, c) {
+	this.surfaces.displayStatic.fill("#FFFFFF");
+	this.surfaces.displayStatic.blit(this.surfaces.displayCache, gameSizeRect, new gamejs.Rect(cam.asPixelVector(), [640, 640]));
+
+	for (var key in users) {
+		users[key].update(cam.position());
+		users[key].draw(this.surfaces.displayStatic);
+	}
+
+	c.update();
+	c.draw(this.surfaces.displayStatic);
 };
 
 World.prototype.size = function() {

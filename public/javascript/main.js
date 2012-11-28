@@ -57,14 +57,12 @@ function start(board) {
    w = new world(board);
    var c = new char([0, 0]);
 
-   w.drawObjects();
+   // w.drawObjects();
 
    var cam = new camera(w.size());
 
    weather.startRain();
 
-   w.surfaces.displayStatic.blit(w.surfaces.displayCache, new gamejs.Rect([0,0], [640, 640]), new gamejs.Rect([0,0], [640, 640]));
-   
    gamejs.time.fpsCallback(tick, this, 30);
 
    function tick(msDuration) {
@@ -120,16 +118,7 @@ function start(board) {
             });
          }
 
-         w.surfaces.displayStatic.fill("#FFFFFF");
-         w.surfaces.displayStatic.blit(w.surfaces.displayCache, new gamejs.Rect([0,0], [640, 640]), new gamejs.Rect(cam.asPixelVector(), [640, 640]));
-
-         for (var key in users) {
-            users[key].update(cam.position());
-            users[key].draw(w.surfaces.displayStatic);
-         }
-
-         c.update();
-         c.draw(w.surfaces.displayStatic);
+         w.updateStaticDisplay(cam, users, c);
 
          update = false;
          charMoved = false;
