@@ -1,5 +1,5 @@
 var gamejs = require('gamejs');
-var tiles = require('tiles').Tiles;
+var t = require('tiles').Tiles;
 var shared = require('shared');
 
 var World = exports.World = function(board) {
@@ -8,6 +8,8 @@ var World = exports.World = function(board) {
 	this.surfaces = {};
 	
 	var map = loadTmxMap();
+
+	t.init();
 
 	this.width = map.width;
 	this.height = map.height;
@@ -31,12 +33,10 @@ World.prototype.boardAt = function(x, y) {
 };
 
 World.prototype.canGoTo = function(x, y) {
-	return (x >= 0 && x < this.width && y >= 0 && y < this.height);
+	return (x >= 0 && x < this.width && y >= 0 && y < this.height) && t.canGoTo(this.boardAt(x, y));
 };
 
 World.prototype.drawObjects = function() {
-
-	var t = new tiles();
 
 	this.surfaces.displayCache.blit(this.surfaces.tmxDisplayCache);
 

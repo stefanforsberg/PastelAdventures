@@ -2,7 +2,6 @@ var gamejs = require('gamejs');
 var char = require('char').Char;
 var otherChar = require('otherChar').OtherChar;
 var world = require('world').World;
-var tiles = require('tiles').Tiles;
 var camera = require('camera').Camera;
 var shared = require('shared');
 var weather = require('weather').Weather;
@@ -42,10 +41,6 @@ function preloadImages(images) {
    gamejs.preload(imagesWithPath);
 }
 
-function canGoTo(w,t,x,y) {
-   return w.canGoTo(x, y) && t.canGoTo(w.boardAt(x, y));
-}
-
 function moveWithCheck(canGo, moveFunction) {
    update = true;
    if(canGo) {
@@ -61,7 +56,6 @@ function start(board) {
    
    w = new world(board);
    var c = new char([0, 0]);
-   t = new tiles();
 
    w.drawObjects();
 
@@ -82,19 +76,19 @@ function start(board) {
 
             if (event.key === gamejs.event.K_UP) {
                c.turnUp();
-               moveWithCheck(canGoTo(w,t,relativePos[0], relativePos[1]-1), function() { c.moveUp(); });
+               moveWithCheck(w.canGoTo(relativePos[0], relativePos[1]-1), function() { c.moveUp(); });
             }
             else if (event.key === gamejs.event.K_DOWN) {
                c.turnDown();
-               moveWithCheck(canGoTo(w,t,relativePos[0], relativePos[1]+1), function() { c.moveDown(); });
+               moveWithCheck(w.canGoTo(relativePos[0], relativePos[1]+1), function() { c.moveDown(); });
             }
             else if (event.key === gamejs.event.K_RIGHT) {
                c.turnRight();
-               moveWithCheck(canGoTo(w,t,relativePos[0]+1, relativePos[1]), function() { c.moveRight(); });
+               moveWithCheck(w.canGoTo(relativePos[0]+1, relativePos[1]), function() { c.moveRight(); });
             }
             else if (event.key === gamejs.event.K_LEFT) {
                c.turnLeft();
-               moveWithCheck(canGoTo(w,t,relativePos[0]-1, relativePos[1]), function() { c.moveLeft(); });
+               moveWithCheck(w.canGoTo(relativePos[0]-1, relativePos[1]), function() { c.moveLeft(); });
             }
             else if (event.key === gamejs.event.K_a) {
                
