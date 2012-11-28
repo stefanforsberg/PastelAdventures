@@ -12,8 +12,6 @@ var update = true;
 var charMoved = false;
 var w;
 var t;
-var tmxDisplayCache;
-var displayCache;
 var tmxDisplay;
 
 preloadImages([
@@ -56,57 +54,8 @@ function moveWithCheck(canGo, moveFunction) {
    }
 }
 
-function cacheTmxMap() {
-
-   var map = new gamejs.tmx.Map('images/map.tmx');
-   w.width = map.width;
-   w.height = map.height;
-
-   tmxDisplayCache = new gamejs.Surface(map.width * map.tileWidth, map.height * map.tileHeight);
-   displayCache = new gamejs.Surface(map.width * map.tileWidth, map.height * map.tileHeight);
-
-   for(var layer = 0; layer < 3; layer++) {
-      var maplayer = map.layers[layer];
-
-      maplayer.gids.forEach(function(row, i) {
-         row.forEach(function(gid, j) {
-            if (gid ===0) return;
-
-            var tileSurface = map.tiles.getSurface(gid);
-            if (tileSurface) {
-               tmxDisplayCache.blit(tileSurface, new gamejs.Rect([j * map.tileWidth, i * map.tileHeight], [map.tileWidth, map.tileHeight])
-               );
-            } 
-            else {
-               gamejs.log('no gid ', gid, i, j, 'layer', i);
-            }
-         }, this);
-      }, this);
-   }
-}
-
-function drawObjects() {
-
-   displayCache.blit(tmxDisplayCache);
-
-   for (var x=0;x<w.width;x++) {
-      for (var y=0; y<w.height; y++) {
-         if(w.boardAt(x, y) !== undefined) {
-            var tile = t.tiles[w.boardAt(x, y)]; 
-            if(tile) {
-               if(tile.img) displayCache.blit(tile.img, [x*shared.tileSize, y*shared.tileSize]);
-            }
-            else {
-               gamejs.log('no tile ', w.boardAt(x, y));  
-            }
-         }
-      }
-   }
-}
-
 function start(board) {
    var display = gamejs.display.setMode([640, 640]);
-   var displayStatic = new gamejs.Surface(640, 640);
 
    gamejs.display.setCaption("Pastel Adventures");
    
@@ -114,14 +63,13 @@ function start(board) {
    var c = new char([0, 0]);
    t = new tiles();
 
-   cacheTmxMap();
-   drawObjects();
+   w.drawObjects();
 
    var cam = new camera(w.size());
 
    weather.startRain();
 
-   displayStatic.blit(displayCache, new gamejs.Rect([0,0], [640, 640]), new gamejs.Rect([0,0], [640, 640]));
+   w.surfaces.displayStatic.blit(w.surfaces.displayCache, new gamejs.Rect([0,0], [640, 640]), new gamejs.Rect([0,0], [640, 640]));
    
    gamejs.time.fpsCallback(tick, this, 30);
 
@@ -178,23 +126,23 @@ function start(board) {
             });
          }
 
-         displayStatic.fill("#FFFFFF");
-         displayStatic.blit(displayCache, new gamejs.Rect([0,0], [640, 640]), new gamejs.Rect(cam.asPixelVector(), [640, 640]));
+         w.surfaces.displayStatic.fill("#FFFFFF");
+         w.surfaces.displayStatic.blit(w.surfaces.displayCache, new gamejs.Rect([0,0], [640, 640]), new gamejs.Rect(cam.asPixelVector(), [640, 640]));
 
          for (var key in users) {
             users[key].update(cam.position());
-            users[key].draw(displayStatic);
+            users[key].draw(w.surfaces.displayStatic);
          }
 
          c.update();
-         c.draw(displayStatic);
+         c.draw(w.surfaces.displayStatic);
 
          update = false;
          charMoved = false;
       }
 
       display.fill("#FFFFFF");
-      display.blit(displayStatic);
+      display.blit(w.surfaces.displayStatic);
 
       weather.draw(display);
    }
@@ -232,7 +180,7 @@ function main() {
 
    socket.on('worldChanged', function (data) {
       w.setBoardAt(data.x, data.y, data.v);
-      drawObjects();
+      w.drawObjects();
       update = true;
    });
 
