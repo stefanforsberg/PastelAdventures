@@ -8,6 +8,7 @@ var World = exports.World = function(board) {
 	this.board = board;
 
 	this.surfaces = {};
+	this.users = {};
 	
 	var map = loadTmxMap();
 
@@ -26,13 +27,13 @@ var World = exports.World = function(board) {
 	return this;
 };
 
-World.prototype.updateStaticDisplay = function(cam, users, c) {
+World.prototype.updateStaticDisplay = function(cam, c) {
 	this.surfaces.displayStatic.fill("#FFFFFF");
 	this.surfaces.displayStatic.blit(this.surfaces.displayCache, gameSizeRect, new gamejs.Rect(cam.asPixelVector(), [640, 640]));
 
-	for (var key in users) {
-		users[key].update(cam.position());
-		users[key].draw(this.surfaces.displayStatic);
+	for (var key in this.users) {
+		this.users[key].update(cam.position());
+		this.users[key].draw(this.surfaces.displayStatic);
 	}
 
 	c.update();

@@ -6,7 +6,6 @@ var camera = require('camera').Camera;
 var shared = require('shared');
 var weather = require('weather').Weather;
 var socket;
-var users = {};
 var update = true;
 var charMoved = false;
 var w;
@@ -56,8 +55,6 @@ function start(board) {
    
    w = new world(board);
    var c = new char([0, 0]);
-
-   // w.drawObjects();
 
    var cam = new camera(w.size());
 
@@ -118,7 +115,7 @@ function start(board) {
             });
          }
 
-         w.updateStaticDisplay(cam, users, c);
+         w.updateStaticDisplay(cam, c);
 
          update = false;
          charMoved = false;
@@ -139,25 +136,25 @@ function main() {
 
          for (var key in data.u) {
             if(key === socket.socket.sessionid) continue;
-            users[key] = new otherChar(new gamejs.Rect(gamejs.utils.vectors.multiply(data.u[key].pos, shared.tileSize)), data.u[key].si);
-            users[key].place(data.u[key].pos, data.u[key].si);
+            w.users[key] = new otherChar(new gamejs.Rect(gamejs.utils.vectors.multiply(data.u[key].pos, shared.tileSize)), data.u[key].si);
+            w.users[key].place(data.u[key].pos, data.u[key].si);
          }
 
          start(data.b);
    });
 
    socket.on('otherConnected', function (data) {
-      users[data.u.id] = new otherChar(new gamejs.Rect(gamejs.utils.vectors.multiply(data.u.pos, shared.tileSize)), data.u.si);
+      w.users[data.u.id] = new otherChar(new gamejs.Rect(gamejs.utils.vectors.multiply(data.u.pos, shared.tileSize)), data.u.si);
       update = true;
    });
 
    socket.on('disconnected', function(data) {
-      delete users[data.id];
+      delete w.users[data.id];
       update = true;
    });
 
    socket.on('ocu', function (data) {
-      users[data.u.id].place(data.u.pos, data.u.si);
+      w.users[data.u.id].place(data.u.pos, data.u.si);
       update = true;
    });
 
