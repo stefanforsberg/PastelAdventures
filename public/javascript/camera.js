@@ -2,10 +2,12 @@ var $v = require('gamejs/utils/vectors');
 var shared = require('shared');
 
 var Camera = exports.Camera = function(sizeOfWorld) {
-
 	this.pos = [0,0];
-	this.sizeOfWorld = sizeOfWorld;
 	return this;
+};
+
+Camera.prototype.init = function(sizeOfWorld) {
+    this.sizeOfWorld = sizeOfWorld;
 };
 
 Camera.prototype.position = function() {

@@ -12,10 +12,12 @@ var World = exports.World = function(board) {
 	
 	var map = loadTmxMap();
 
-	t.init();
-
 	this.width = map.width;
 	this.height = map.height;
+
+	t.init();
+	shared.camera.init(this.size());
+
 	this.surfaces.tmxDisplayCache = map.tmxDisplayCache;
 	this.surfaces.displayCache = map.displayCache;
 	this.surfaces.displayStatic = new gamejs.Surface(640, 640);
@@ -27,12 +29,12 @@ var World = exports.World = function(board) {
 	return this;
 };
 
-World.prototype.updateStaticDisplay = function(cam, c) {
+World.prototype.updateStaticDisplay = function(c) {
 	this.surfaces.displayStatic.fill("#FFFFFF");
-	this.surfaces.displayStatic.blit(this.surfaces.displayCache, gameSizeRect, new gamejs.Rect(cam.asPixelVector(), [640, 640]));
+	this.surfaces.displayStatic.blit(this.surfaces.displayCache, gameSizeRect, new gamejs.Rect(shared.camera.asPixelVector(), [640, 640]));
 
 	for (var key in this.users) {
-		this.users[key].update(cam.position());
+		this.users[key].update(shared.camera.position());
 		this.users[key].draw(this.surfaces.displayStatic);
 	}
 

@@ -2,7 +2,6 @@ var gamejs = require('gamejs');
 var char = require('char').Char;
 var otherChar = require('otherChar').OtherChar;
 var world = require('world').World;
-var camera = require('camera').Camera;
 var shared = require('shared');
 var weather = require('weather').Weather;
 var socket;
@@ -10,7 +9,6 @@ var update = true;
 var charMoved = false;
 var w;
 var t;
-var tmxDisplay;
 
 preloadImages([
    'mountain.png', 
@@ -56,8 +54,6 @@ function start(board) {
    w = new world(board);
    var c = new char([0, 0]);
 
-   var cam = new camera(w.size());
-
    weather.startRain();
 
    gamejs.time.fpsCallback(tick, this, 30);
@@ -67,7 +63,7 @@ function start(board) {
       gamejs.event.get().forEach(function(event) {
          if (event.type === gamejs.event.KEY_DOWN) {
 
-            var relativePos = gamejs.utils.vectors.add(c.pos(), cam.position());
+            var relativePos = gamejs.utils.vectors.add(c.pos(), shared.camera.position());
 
             if (event.key === gamejs.event.K_UP) {
                c.turnUp();
@@ -87,7 +83,7 @@ function start(board) {
             }
             else if (event.key === gamejs.event.K_a) {
                
-               var relativePointingPos = gamejs.utils.vectors.add(c.pointingPos(), cam.position());
+               var relativePointingPos = gamejs.utils.vectors.add(c.pointingPos(), shared.camera.position());
 
                socket.emit('a', 
                { 
@@ -99,7 +95,7 @@ function start(board) {
             }
          }
 
-         cam.updatePosition(c);
+         shared.camera.updatePosition(c);
         
       });
       
@@ -109,13 +105,13 @@ function start(board) {
          if(charMoved) {
             socket.emit('cu', 
             { 
-               p: gamejs.utils.vectors.add(c.pos(), cam.position()),
+               p: gamejs.utils.vectors.add(c.pos(), shared.camera.position()),
                r: c.rotation,
                si: c.spriteIndex
             });
          }
 
-         w.updateStaticDisplay(cam, c);
+         w.updateStaticDisplay(c);
 
          update = false;
          charMoved = false;
