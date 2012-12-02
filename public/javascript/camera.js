@@ -14,6 +14,10 @@ Camera.prototype.position = function() {
 	return this.pos;
 };
 
+Camera.prototype.absolutePosition = function(relativePosition) {
+    return $v.add(relativePosition, this.pos);
+};
+
 Camera.prototype.asPixelVector = function() {
    return $v.multiply(this.pos, shared.tileSize);
 };

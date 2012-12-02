@@ -63,31 +63,31 @@ function start(board) {
       gamejs.event.get().forEach(function(event) {
          if (event.type === gamejs.event.KEY_DOWN) {
 
-            var relativePos = gamejs.utils.vectors.add(c.pos(), shared.camera.position());
+            var absolutePos = shared.camera.absolutePosition(c.pos());
 
             if (event.key === gamejs.event.K_UP) {
                c.turnUp();
-               moveWithCheck(w.canGoTo(relativePos[0], relativePos[1]-1), function() { c.moveUp(); });
+               moveWithCheck(w.canGoTo(absolutePos[0], absolutePos[1]-1), function() { c.moveUp(); });
             }
             else if (event.key === gamejs.event.K_DOWN) {
                c.turnDown();
-               moveWithCheck(w.canGoTo(relativePos[0], relativePos[1]+1), function() { c.moveDown(); });
+               moveWithCheck(w.canGoTo(absolutePos[0], absolutePos[1]+1), function() { c.moveDown(); });
             }
             else if (event.key === gamejs.event.K_RIGHT) {
                c.turnRight();
-               moveWithCheck(w.canGoTo(relativePos[0]+1, relativePos[1]), function() { c.moveRight(); });
+               moveWithCheck(w.canGoTo(absolutePos[0]+1, absolutePos[1]), function() { c.moveRight(); });
             }
             else if (event.key === gamejs.event.K_LEFT) {
                c.turnLeft();
-               moveWithCheck(w.canGoTo(relativePos[0]-1, relativePos[1]), function() { c.moveLeft(); });
+               moveWithCheck(w.canGoTo(absolutePos[0]-1, absolutePos[1]), function() { c.moveLeft(); });
             }
             else if (event.key === gamejs.event.K_a) {
                
-               var relativePointingPos = gamejs.utils.vectors.add(c.pointingPos(), shared.camera.position());
+               var absolutePointingPos = shared.camera.absolutePosition(c.pointingPos());
 
                socket.emit('a', 
                { 
-                  p: relativePointingPos
+                  p: absolutePointingPos
                });
             }
             else if (event.key === gamejs.event.K_r) {
@@ -105,7 +105,7 @@ function start(board) {
          if(charMoved) {
             socket.emit('cu', 
             { 
-               p: gamejs.utils.vectors.add(c.pos(), shared.camera.position()),
+               p: shared.camera.absolutePosition(c.pos()),
                r: c.rotation,
                si: c.spriteIndex
             });
