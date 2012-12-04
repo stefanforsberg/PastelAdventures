@@ -21,10 +21,6 @@ var Char = exports.Char = function(rect) {
 
 gamejs.utils.objects.extend(Char, gamejs.sprite.Sprite);
 
-Char.prototype.move = function(x, y) {
-	this.rect.moveIp(x, y);
-};
-
 Char.prototype.update = function() {
    var relativePos = gamejs.utils.vectors.subtract(this.pos, shared.camera.position());
 
@@ -35,26 +31,6 @@ Char.prototype.update = function() {
 Char.prototype.place = function(pos, si) {
    this.pos = pos;
    this.spriteIndex = si;
-};
-
-Char.prototype.pointingPos = function() {
-   var si = this.spriteIndex;
-   var pointingPos;
-
-   if(si === 1) { 
-      pointingPos = [0,-1];
-   }
-   else if(si === 0) { 
-      pointingPos = [0,1];
-   }
-   else if(si === 3) { 
-      pointingPos = [-1,0];
-   }
-   else if(si === 2) { 
-      pointingPos = [1,0];
-   }
-
-   return gamejs.utils.vectors.add(this.pos(), pointingPos);
 };
 
 

@@ -6,7 +6,6 @@ var shared = require('shared');
 var weather = require('weather').Weather;
 var socket;
 var update = true;
-var charMoved = false;
 var w;
 var c;
 
@@ -55,27 +54,17 @@ function start(board) {
       gamejs.event.get().forEach(function(event) {
          if (event.type === gamejs.event.KEY_DOWN) {
 
-            //var absolutePos = shared.camera.absolutePosition(c.pos());
-
             if (event.key === gamejs.event.K_UP) {
                socket.emit('cm', { d: 'u'});
-               // c.turnUp();
-               // moveWithCheck(w.canGoTo(absolutePos[0], absolutePos[1]-1), function() { c.moveUp(); });
             }
             else if (event.key === gamejs.event.K_DOWN) {
                socket.emit('cm', { d: 'd'});
-               // c.turnDown();
-               // moveWithCheck(w.canGoTo(absolutePos[0], absolutePos[1]+1), function() { c.moveDown(); });
             }
             else if (event.key === gamejs.event.K_RIGHT) {
                socket.emit('cm', { d: 'r'});
-               // c.turnRight();
-               // moveWithCheck(w.canGoTo(absolutePos[0]+1, absolutePos[1]), function() { c.moveRight(); });
             }
             else if (event.key === gamejs.event.K_LEFT) {
                socket.emit('cm', { d: 'l'});
-               // c.turnLeft();
-               // moveWithCheck(w.canGoTo(absolutePos[0]-1, absolutePos[1]), function() { c.moveLeft(); });
             }
             else if (event.key === gamejs.event.K_a) {
                socket.emit('a', {});
@@ -84,19 +73,12 @@ function start(board) {
                weather.toggleRain();
             }
          }
-
-         
-        
       });
       
       if(update) {
-
          shared.camera.updatePosition(c);
-
          w.updateStaticDisplay(c);
-
          update = false;
-         charMoved = false;
       }
 
       display.fill("#FFFFFF");
