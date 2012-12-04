@@ -8,7 +8,7 @@ var socket;
 var update = true;
 var charMoved = false;
 var w;
-var t;
+var c;
 
 preloadImages([
    'mountain.png', 
@@ -38,21 +38,13 @@ function preloadImages(images) {
    gamejs.preload(imagesWithPath);
 }
 
-function moveWithCheck(canGo, moveFunction) {
-   update = true;
-   if(canGo) {
-      moveFunction();
-      charMoved = true;
-   }
-}
-
 function start(board) {
    var display = gamejs.display.setMode([640, 640]);
 
    gamejs.display.setCaption("Pastel Adventures");
    
-   w = new world(board);
-   var c = new char([0, 0]);
+   w.init(board);
+   c = new char([0, 0]);
 
    weather.startRain();
 
@@ -63,53 +55,43 @@ function start(board) {
       gamejs.event.get().forEach(function(event) {
          if (event.type === gamejs.event.KEY_DOWN) {
 
-            var absolutePos = shared.camera.absolutePosition(c.pos());
+            //var absolutePos = shared.camera.absolutePosition(c.pos());
 
             if (event.key === gamejs.event.K_UP) {
-               c.turnUp();
-               moveWithCheck(w.canGoTo(absolutePos[0], absolutePos[1]-1), function() { c.moveUp(); });
+               socket.emit('cm', { d: 'u'});
+               // c.turnUp();
+               // moveWithCheck(w.canGoTo(absolutePos[0], absolutePos[1]-1), function() { c.moveUp(); });
             }
             else if (event.key === gamejs.event.K_DOWN) {
-               c.turnDown();
-               moveWithCheck(w.canGoTo(absolutePos[0], absolutePos[1]+1), function() { c.moveDown(); });
+               socket.emit('cm', { d: 'd'});
+               // c.turnDown();
+               // moveWithCheck(w.canGoTo(absolutePos[0], absolutePos[1]+1), function() { c.moveDown(); });
             }
             else if (event.key === gamejs.event.K_RIGHT) {
-               c.turnRight();
-               moveWithCheck(w.canGoTo(absolutePos[0]+1, absolutePos[1]), function() { c.moveRight(); });
+               socket.emit('cm', { d: 'r'});
+               // c.turnRight();
+               // moveWithCheck(w.canGoTo(absolutePos[0]+1, absolutePos[1]), function() { c.moveRight(); });
             }
             else if (event.key === gamejs.event.K_LEFT) {
-               c.turnLeft();
-               moveWithCheck(w.canGoTo(absolutePos[0]-1, absolutePos[1]), function() { c.moveLeft(); });
+               socket.emit('cm', { d: 'l'});
+               // c.turnLeft();
+               // moveWithCheck(w.canGoTo(absolutePos[0]-1, absolutePos[1]), function() { c.moveLeft(); });
             }
             else if (event.key === gamejs.event.K_a) {
-               
-               var absolutePointingPos = shared.camera.absolutePosition(c.pointingPos());
-
-               socket.emit('a', 
-               { 
-                  p: absolutePointingPos
-               });
+               socket.emit('a', {});
             }
             else if (event.key === gamejs.event.K_r) {
                weather.toggleRain();
             }
          }
 
-         shared.camera.updatePosition(c);
+         
         
       });
       
       if(update) {
 
-         // Other things besides char moving can trigger updates, for instance other people moving
-         if(charMoved) {
-            socket.emit('cu', 
-            { 
-               p: shared.camera.absolutePosition(c.pos()),
-               r: c.rotation,
-               si: c.spriteIndex
-            });
-         }
+         shared.camera.updatePosition(c);
 
          w.updateStaticDisplay(c);
 
@@ -127,6 +109,8 @@ function start(board) {
 function main() {
    
    socket = io.connect('http://localhost:8080');
+
+   w = new world();
 
    socket.on('connected', function (data) {
 
@@ -146,6 +130,11 @@ function main() {
 
    socket.on('disconnected', function(data) {
       delete w.users[data.id];
+      update = true;
+   });
+
+   socket.on('cm', function (data) {
+      c.place(data.u.pos, data.u.si);
       update = true;
    });
 

@@ -5,7 +5,7 @@ var Char = exports.Char = function(rect) {
    Char.superConstructor.apply(this, arguments);
 
    this.spriteIndex = 0;
-
+   this.pos = [0,0];
    this.sprites = 
    [
       gamejs.image.load(shared.imagePath + "char_d.png"),
@@ -16,53 +16,25 @@ var Char = exports.Char = function(rect) {
 
    this.image = this.sprites[this.spriteIndex];
    this.rect = new gamejs.Rect(rect);
-   return this;
+   return this; 
 };
 
 gamejs.utils.objects.extend(Char, gamejs.sprite.Sprite);
-
-Char.prototype.turnUp = function() {
-   this.spriteIndex = 1;
-};
-
-Char.prototype.moveUp = function() {
-   this.rect.moveIp(0,-shared.tileSize);
-};
-
-Char.prototype.turnDown = function() {
-   this.spriteIndex = 0;
-};
-
-Char.prototype.moveDown = function() {
-   this.rect.moveIp(0,shared.tileSize);
-};
-
-Char.prototype.turnRight = function() {
-   this.spriteIndex = 2;
-};
-
-Char.prototype.moveRight = function() {
-   this.rect.moveIp(shared.tileSize, 0);
-};
-
-Char.prototype.turnLeft = function() {
-   this.spriteIndex = 3;
-};
-
-Char.prototype.moveLeft = function() {
-   this.rect.moveIp(-shared.tileSize, 0);
-};
 
 Char.prototype.move = function(x, y) {
 	this.rect.moveIp(x, y);
 };
 
 Char.prototype.update = function() {
+   var relativePos = gamejs.utils.vectors.subtract(this.pos, shared.camera.position());
+
+   this.rect = new gamejs.Rect(gamejs.utils.vectors.multiply(relativePos, shared.tileSize));
    this.image = this.sprites[this.spriteIndex];
 };
 
-Char.prototype.pos = function() {
-   return [this.rect.left / shared.tileSize, this.rect.top / shared.tileSize];
+Char.prototype.place = function(pos, si) {
+   this.pos = pos;
+   this.spriteIndex = si;
 };
 
 Char.prototype.pointingPos = function() {

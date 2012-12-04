@@ -23,24 +23,21 @@ Camera.prototype.asPixelVector = function() {
 };
 
 Camera.prototype.updatePosition = function(char) {
+    var t = $v.subtract(char.pos, this.pos);
 
-    if(char.pos()[0] > 28 && this.pos[0] <= this.sizeOfWorld[0] - 41) {
+    if(t[0] > 28 && this.pos[0] <= this.sizeOfWorld[0] - 41) {
         this.pos = $v.add(this.pos, [1,0]);   
-        char.move(-shared.tileSize, 0);
     }  
 
-    if(char.pos()[1] > 28 && this.pos[1] <= this.sizeOfWorld[1] - 41) {
+    if(t[1] > 28 && this.pos[1] <= this.sizeOfWorld[1] - 41) {
         this.pos = $v.add(this.pos, [0,1]);   
-        char.move(0, -shared.tileSize);
     }  
 
-    if(char.pos()[0] < 12 && this.pos[0] > 0) {
+    if(t[0] < 12 && this.pos[0] > 0) {
         this.pos = $v.add(this.pos, [-1,0]);   
-        char.move(shared.tileSize, 0);
     }  
 
-    if(char.pos()[1] < 12 && this.pos[1] > 0) {
+    if(t[1] < 12 && this.pos[1] > 0) {
         this.pos = $v.add(this.pos, [0,-1]);   
-        char.move(0, shared.tileSize);
     } 
 };

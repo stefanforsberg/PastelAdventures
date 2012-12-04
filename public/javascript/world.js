@@ -4,12 +4,16 @@ var shared = require('shared');
 
 var gameSizeRect = new gamejs.Rect([0,0], [640, 640]);
 
-var World = exports.World = function(board) {
-	this.board = board;
-
+var World = exports.World = function() {
 	this.surfaces = {};
 	this.users = {};
-	
+
+	return this;
+};
+
+World.prototype.init = function(board) {
+	this.board = board;	
+
 	var map = loadTmxMap();
 
 	this.width = map.width;
@@ -25,8 +29,6 @@ var World = exports.World = function(board) {
 	this.surfaces.displayStatic.blit(this.surfaces.displayCache, gameSizeRect, gameSizeRect);
 
 	this.drawObjects();
-
-	return this;
 };
 
 World.prototype.updateStaticDisplay = function(c) {
