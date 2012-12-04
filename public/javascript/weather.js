@@ -16,6 +16,10 @@ exports.Weather = {
 		this.isRaining = false;
 	},
 
+	startSnow:function() {
+		for(var i = 0; i < 300; i++) this.weatherEffects.push(new snowFlake());
+	},
+
 	toggleRain: function() {
 		if(this.isRaining) {
 			this.stopRain();
@@ -27,6 +31,31 @@ exports.Weather = {
 
 	draw: function(display) {
 		for(var i = 0; i < this.weatherEffects.length; i++) this.weatherEffects[i].draw(display);
+	}
+};
+
+var snowFlake = function() {
+   this.xStart = Math.floor((Math.random()*1000)+1);
+   this.x = this.xStart;
+   this.yEnd = Math.floor(150+(Math.random()*650)+1);
+   this.y = Math.floor((Math.random()*this.yEnd)+1);
+   this.deltaY = Math.floor((Math.random()*4)+1);
+   this.alpha = 0.75 + Math.random()*0.25;
+   this.color = '#FFFFFF';	
+}
+
+snowFlake.prototype.draw = function(display) {
+	if(this.y > this.yEnd) {
+		this.y = 0;
+		this.x = this.xStart;
+		this.splatCounter = 0;
+	}
+	else {
+		gamejs.draw.line(display, this.color, [this.x, this.y], [this.x+2,this.y-2 - 2*Math.sin(this.y/10)], this.alpha);
+		gamejs.draw.line(display, this.color, [this.x + 2*Math.cos(this.y/10), this.y], [this.x+2,this.y+2], this.alpha);
+
+		this.y+=this.deltaY;
+		this.x = 2*Math.sin(this.y/10) + (75 + this.xStart-this.y/4); 
 	}
 };
 

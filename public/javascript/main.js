@@ -45,7 +45,7 @@ function start(board) {
    w.init(board);
    c = new char([0, 0]);
 
-   weather.startRain();
+   weather.startSnow();
 
    gamejs.time.fpsCallback(tick, this, 30);
 
