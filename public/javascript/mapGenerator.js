@@ -6,7 +6,8 @@ function drawTmx() {
 
    var maplayer = map.layers[3];
 
-   var mapArray = "<pre><br />var board = {<br/>&nbsp;&nbsp;";
+   var mapArray = "<pre><br />var map = { width: " + map.width + ", height: " + map.height + "};";
+   mapArray += "<br />var board = {<br/>&nbsp;&nbsp;";
    var currentRow;
 
    maplayer.gids.forEach(function(row, i) {
