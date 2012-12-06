@@ -3,6 +3,7 @@ var shared = require('shared');
 
 var Camera = exports.Camera = function(sizeOfWorld) {
 	this.pos = [0,0];
+    this.cameraWidth = (640 / 16);
 	return this;
 };
 
@@ -25,19 +26,17 @@ Camera.prototype.asPixelVector = function() {
 Camera.prototype.updatePosition = function(char) {
     var t = $v.subtract(char.pos, this.pos);
 
-    if(t[0] > 28 && this.pos[0] <= this.sizeOfWorld[0] - 41) {
-        this.pos = $v.add(this.pos, [1,0]);   
-    }  
+    if(t[0] !== 19) {
+        this.pos[0] = char.pos[0] - 19;
 
-    if(t[1] > 28 && this.pos[1] <= this.sizeOfWorld[1] - 41) {
-        this.pos = $v.add(this.pos, [0,1]);   
-    }  
+        if(this.pos[0] > (this.sizeOfWorld[0] - this.cameraWidth))  this.pos[0] = (this.sizeOfWorld[0] - this.cameraWidth);
+        if(this.pos[0] < 0) this.pos[0] = 0;
+    }
 
-    if(t[0] < 12 && this.pos[0] > 0) {
-        this.pos = $v.add(this.pos, [-1,0]);   
-    }  
+    if(t[1] !== 19) {
+        this.pos[1] = char.pos[1] - 19;
 
-    if(t[1] < 12 && this.pos[1] > 0) {
-        this.pos = $v.add(this.pos, [0,-1]);   
-    } 
+        if(this.pos[1] > this.sizeOfWorld[1] - this.cameraWidth) this.pos[1] = (this.sizeOfWorld[1] - this.cameraWidth);
+        if(this.pos[1] < 0) this.pos[1] = 0;
+    }
 };
