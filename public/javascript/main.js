@@ -45,8 +45,6 @@ function start(board) {
    w.init(board);
    c = new char([0, 0]);
 
-   weather.startSnow();
-
    gamejs.time.fpsCallback(tick, this, 30);
 
    function tick(msDuration) {
@@ -68,9 +66,6 @@ function start(board) {
             }
             else if (event.key === gamejs.event.K_a) {
                socket.emit('a', {});
-            }
-            else if (event.key === gamejs.event.K_r) {
-               weather.toggleRain();
             }
          }
       });

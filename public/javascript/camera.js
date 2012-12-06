@@ -1,23 +1,23 @@
 var $v = require('gamejs/utils/vectors');
 var shared = require('shared');
 
-var Camera = exports.Camera = function(sizeOfWorld) {
-	this.pos = [0,0];
+var Camera = exports.Camera = function() {
+    this.pos = [0,0];
     this.cameraWidth = (640 / 16);
-	return this;
+    return this;
 };
 
 Camera.prototype.init = function(sizeOfWorld) {
     this.sizeOfWorld = sizeOfWorld;
 };
 
-Camera.prototype.position = function() {
-	return this.pos;
-};
+// Camera.prototype.position = function() {
+// 	return this.pos;
+// };
 
-Camera.prototype.absolutePosition = function(relativePosition) {
-    return $v.add(relativePosition, this.pos);
-};
+// Camera.prototype.absolutePosition = function(relativePosition) {
+//     return $v.add(relativePosition, this.pos);
+// };
 
 Camera.prototype.asPixelVector = function() {
    return $v.multiply(this.pos, shared.tileSize);

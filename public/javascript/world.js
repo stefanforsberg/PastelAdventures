@@ -36,7 +36,7 @@ World.prototype.updateStaticDisplay = function(c) {
 	this.surfaces.displayStatic.blit(this.surfaces.displayCache, gameSizeRect, new gamejs.Rect(shared.camera.asPixelVector(), [640, 640]));
 
 	for (var key in this.users) {
-		this.users[key].update(shared.camera.position());
+		this.users[key].update();
 		this.users[key].draw(this.surfaces.displayStatic);
 	}
 
