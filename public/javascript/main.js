@@ -18,8 +18,10 @@ preloadImages([
    'char_l.png',
    'char_d_0.png', 
    'char_d_1.png', 
-   'char_o_r.png', 
-   'char_o_l.png',   
+   'char_r_0.png', 
+   'char_r_1.png',   
+   'char_l_0.png', 
+   'char_l_1.png',  
    'tree_chopped.png',
    'bridge_v.png'
    ]);

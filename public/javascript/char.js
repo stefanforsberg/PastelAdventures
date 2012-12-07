@@ -11,8 +11,8 @@ var Char = exports.Char = function(rect) {
    [
       [gamejs.image.load(shared.imagePath + "char_d_0.png"), gamejs.image.load(shared.imagePath + "char_d.png"), gamejs.image.load(shared.imagePath + "char_d_1.png"), gamejs.image.load(shared.imagePath + "char_d.png")],
       [gamejs.image.load(shared.imagePath + "char_u.png"), gamejs.image.load(shared.imagePath + "char_u.png"), gamejs.image.load(shared.imagePath + "char_u.png"), gamejs.image.load(shared.imagePath + "char_u.png")],
-      [gamejs.image.load(shared.imagePath + "char_r.png"), gamejs.image.load(shared.imagePath + "char_r.png"), gamejs.image.load(shared.imagePath + "char_r.png"), gamejs.image.load(shared.imagePath + "char_r.png")],
-      [gamejs.image.load(shared.imagePath + "char_l.png"), gamejs.image.load(shared.imagePath + "char_l.png"), gamejs.image.load(shared.imagePath + "char_l.png"), gamejs.image.load(shared.imagePath + "char_l.png")]
+      [gamejs.image.load(shared.imagePath + "char_r_0.png"), gamejs.image.load(shared.imagePath + "char_r.png"), gamejs.image.load(shared.imagePath + "char_r_1.png"), gamejs.image.load(shared.imagePath + "char_r.png")],
+      [gamejs.image.load(shared.imagePath + "char_l_0.png"), gamejs.image.load(shared.imagePath + "char_l.png"), gamejs.image.load(shared.imagePath + "char_l_1.png"), gamejs.image.load(shared.imagePath + "char_l.png")]
    ];
 
    this.image = this.sprites[this.spriteIndex][this.step];
