@@ -26,6 +26,8 @@ preloadImages([
    'bridge_v.png'
    ]);
 
+gamejs.preload(["/sound/01.ogg"]);
+
 function preloadImages(images) {
    var imagesWithPath = [];
 
