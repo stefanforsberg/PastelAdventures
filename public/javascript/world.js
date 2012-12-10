@@ -7,6 +7,9 @@ var gameSizeRect = new gamejs.Rect([0,0], [640, 640]);
 var World = exports.World = function() {
 	this.surfaces = {};
 	this.users = {};
+	this.sounds = {
+		world: new gamejs.mixer.Sound("/sound/world.ogg")
+	}
 
 	return this;
 };
@@ -29,6 +32,8 @@ World.prototype.init = function(board) {
 	this.surfaces.displayStatic.blit(this.surfaces.displayCache, gameSizeRect, gameSizeRect);
 
 	this.drawObjects();
+
+	this.sounds.world.play(true);
 };
 
 World.prototype.updateStaticDisplay = function(c) {

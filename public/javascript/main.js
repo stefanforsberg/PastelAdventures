@@ -26,7 +26,7 @@ preloadImages([
    'bridge_v.png'
    ]);
 
-gamejs.preload(["/sound/01.ogg"]);
+gamejs.preload(["/sound/world.ogg"]);
 
 function preloadImages(images) {
    var imagesWithPath = [];
@@ -47,14 +47,13 @@ function start(board) {
    gamejs.display.setCaption("Pastel Adventures");
    
    w.init(board);
-   c = new char([0, 0]);
 
    gamejs.time.fpsCallback(tick, this, 30);
 
    function tick(msDuration) {
 
       gamejs.event.get().forEach(function(event) {
-         if (event.type === gamejs.event.KEY_DOWN) {
+         if (event.type === gamejs.event.KEY_UP) {
 
             if (event.key === gamejs.event.K_UP) {
                socket.emit('cm', { d: 'u'});
@@ -94,6 +93,11 @@ function main() {
    w = new world();
 
    socket.on('connected', function (data) {
+
+         console.log(data.c);
+
+         c = new char(data.c.pos);
+         c.place(data.c.pos, data.c.si);
 
          for (var key in data.u) {
             if(key === socket.socket.sessionid) continue;
