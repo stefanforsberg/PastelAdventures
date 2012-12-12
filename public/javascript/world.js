@@ -8,7 +8,8 @@ var World = exports.World = function() {
 	this.surfaces = {};
 	this.users = {};
 	this.sounds = {
-		world: new gamejs.mixer.Sound("/sound/world.ogg")
+		world: new gamejs.mixer.Sound("/sound/world.ogg"),
+		warp: new gamejs.mixer.Sound("/sound/warp.ogg")
 	}
 
 	return this;

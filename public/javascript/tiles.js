@@ -6,6 +6,7 @@ var Tiles = exports.Tiles = {
 	tiles: {},
 
 	init: function() {
+		this.tiles[1] = new Tile(true);
 		this.tiles[3] = new Tile(true, "mountain.png");
 		this.tiles[4] = new Tile(true, "tree.png");
 		this.tiles[5] = new Tile(true, "tree_chopped.png");
