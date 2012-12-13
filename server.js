@@ -2,6 +2,8 @@ var io = require('socket.io');
 var http = require('http');
 var express = require('express');
 
+var port = process.env.port || 8080;
+
 var app = express();
 var server = http.createServer(app);
 
@@ -36,6 +38,6 @@ io.configure(function () {
   io.set('log level', 2);
 })
 
-server.listen(8080);
+server.listen(port);
 
 require('./lib/world.js').World(io);

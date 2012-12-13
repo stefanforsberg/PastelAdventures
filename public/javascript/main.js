@@ -89,7 +89,7 @@ function start(board) {
 
 function main() {
    
-   socket = io.connect('http://localhost:8080');
+   socket = io.connect();
 
    w = new world();
 
