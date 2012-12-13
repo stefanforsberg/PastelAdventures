@@ -31,6 +31,11 @@ app.post('/index.html', function (req, res) {
 app.use(express.static(__dirname + "/public"));
 
 io = io.listen(server);
+
+io.configure(function () {
+  io.set('log level', 2);
+})
+
 server.listen(8080);
 
 require('./lib/world.js').World(io);
