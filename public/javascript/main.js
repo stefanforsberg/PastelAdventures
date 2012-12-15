@@ -40,7 +40,7 @@ function preloadImages(images) {
 }
 
 function start(board) {
-   var display = gamejs.display.setMode([640, 640]);
+   var display = gamejs.display.setMode([shared.worldWidth, shared.worldHeight]);
 
    gamejs.display.setCaption("Pastel Adventures");
    
@@ -91,9 +91,6 @@ function main() {
    w = new world();
 
    socket.on('connected', function (data) {
-
-         console.log(data.c);
-
          c = new char(data.c.pos);
          c.place(data.c.pos, data.c.si);
 
