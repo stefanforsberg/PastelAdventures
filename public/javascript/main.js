@@ -26,9 +26,6 @@ preloadImages([
    'bridge_v.png'
    ]);
 
-gamejs.preload(["/sound/world.ogg"]);
-gamejs.preload(["/sound/warp.ogg"]);
-
 function preloadImages(images) {
    var imagesWithPath = [];
 
@@ -123,8 +120,6 @@ function main() {
       c.place(data.u.pos, data.u.si);
 
       update = true;
-
-      if(data.sfx === "warp") w.sounds.warp.play();;
    });
 
    socket.on('ocu', function (data) {
