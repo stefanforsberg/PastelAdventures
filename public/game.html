@@ -15,14 +15,10 @@
 
         h1 {
           font-family: asap, serif;
-          text-align: center;
           color: #FF3374;
           text-shadow: 0px 1px 0px #888;
         }
-
-        #header {
-          display: inline;
-        }
+       
 
         canvas {
           border: solid 1px #f3f3f3;
@@ -30,8 +26,17 @@
 
         #main-container {
           width: 720px;
-          text-align: center;
           margin: auto;
+
+        }
+
+        #title {
+          float: left;
+
+        }
+
+        #header {
+
         }
 
         #game-container {
@@ -39,7 +44,9 @@
         }
 
         #wood {
-          
+          float: right;
+          margin-top: 8px;
+          margin-right: 10px;
         }
 
         #wood img {
@@ -58,7 +65,9 @@
         <div id="game-container">
           <div id="header">
 
-            <h1>Pastel Adventures</h1>
+            <div id="title">
+              <h1>Pastel Adventures</h1>
+            </div>
 
             <div id="wood">
               <img src="/images/icon_wood.png" />
