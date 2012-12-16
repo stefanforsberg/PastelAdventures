@@ -38,11 +38,12 @@ World.prototype.updateStaticDisplay = function(c) {
 
 	for (var key in this.users) {
 		this.users[key].update();
-		this.users[key].draw(this.surfaces.displayStatic);
+		this.surfaces.displayStatic.blit(this.users[key].surface, this.users[key].rect);
+		//this.users[key].draw(this.surfaces.displayStatic);
 	}
 
 	c.update();
-	c.draw(this.surfaces.displayStatic);
+	this.surfaces.displayStatic.blit(c.surface, c.rect);
 };
 
 World.prototype.size = function() {

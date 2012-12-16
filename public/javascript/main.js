@@ -1,6 +1,5 @@
 var gamejs = require('gamejs');
 var char = require('char').Char;
-var otherChar = require('otherChar').OtherChar;
 var world = require('world').World;
 var shared = require('shared');
 var weather = require('weather').Weather;
@@ -10,18 +9,9 @@ var w;
 var c;
 
 preloadImages([
+   'char.png',
    'mountain.png', 
    'tree.png', 
-   'char_d.png', 
-   'char_u.png', 
-   'char_r.png', 
-   'char_l.png',
-   'char_d_0.png', 
-   'char_d_1.png', 
-   'char_r_0.png', 
-   'char_r_1.png',   
-   'char_l_0.png', 
-   'char_l_1.png',  
    'tree_chopped.png',
    'bridge_v.png'
    ]);
@@ -91,12 +81,12 @@ function main() {
    w = new world();
 
    socket.on('connected', function (data) {
-         c = new char(data.c.pos);
+         c = new char(data.c.pos, 0);
          c.place(data.c.pos, data.c.si);
 
          for (var key in data.u) {
             if(key === socket.socket.sessionid) continue;
-            w.users[key] = new otherChar(new gamejs.Rect(gamejs.utils.vectors.multiply(data.u[key].pos, shared.tileSize)), data.u[key].si);
+            w.users[key] = new char(new gamejs.Rect(gamejs.utils.vectors.multiply(data.u[key].pos, shared.tileSize)), 0.35);
             w.users[key].place(data.u[key].pos, data.u[key].si);
          }
 
@@ -104,7 +94,7 @@ function main() {
    });
 
    socket.on('otherConnected', function (data) {
-      w.users[data.u.id] = new otherChar(new gamejs.Rect(gamejs.utils.vectors.multiply(data.u.pos, shared.tileSize)), data.u.si);
+      w.users[data.u.id] = new char(new gamejs.Rect(gamejs.utils.vectors.multiply(data.u.pos, shared.tileSize)), 0.35);
       update = true;
    });
 

@@ -42,6 +42,7 @@ var snowFlake = function() {
    this.deltaY = Math.floor((Math.random()*4)+1);
    this.alpha = 0.75 + Math.random()*0.25;
    this.color = '#FFFFFF';	
+
 }
 
 snowFlake.prototype.draw = function(display) {
@@ -65,9 +66,10 @@ var rainDrop = function() {
    this.yEnd = Math.floor(150+(Math.random()*650)+1);
    this.y = Math.floor((Math.random()*this.yEnd)+1);
    this.deltaY = 3 + Math.floor((Math.random()*4)+1);
-   this.alpha = 0.3 + Math.random()*0.5;
+   this.alpha = 0.3 + Math.random()*0.3;
    this.splatCounter = 0;
    this.color = '#0000FF';
+   this.length = Math.floor((Math.random()*4)+2);
 };
 
 rainDrop.prototype.draw = function(display) {
@@ -87,8 +89,9 @@ rainDrop.prototype.draw = function(display) {
 		}
 	}
 	else {
-		gamejs.draw.line(display, this.color, [this.x, this.y], [this.x+1.5,this.y-3], this.alpha);
-		gamejs.draw.line(display, this.color, [this.x+1.5, this.y-3], [this.x+3,this.y-6], this.alpha/4);
+		gamejs.draw.line(display, this.color, [this.x, this.y], [this.x+this.length/4,this.y-this.length], this.alpha);
+		gamejs.draw.line(display, this.color, [this.x+this.length/4, this.y-this.length], [this.x+this.length/2,this.y-this.length*2], this.alpha/2);
+		gamejs.draw.line(display, this.color, [this.x+this.length/2,this.y-this.length*2], [this.x+this.length,this.y-this.length*4], this.alpha/4);
 		this.y+=this.deltaY;
 		this.x = 75 + this.xStart-this.y/4; 
 	}
