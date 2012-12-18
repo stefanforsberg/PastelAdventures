@@ -39,7 +39,6 @@ World.prototype.updateStaticDisplay = function(c) {
 	for (var key in this.users) {
 		this.users[key].update();
 		this.surfaces.displayStatic.blit(this.users[key].surface, this.users[key].rect);
-		//this.users[key].draw(this.surfaces.displayStatic);
 	}
 
 	c.update();
