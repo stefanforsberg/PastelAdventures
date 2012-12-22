@@ -36,8 +36,6 @@ function start(board) {
    
    w.init(board);
 
-   weather.startSnow();
-
    gamejs.time.fpsCallback(tick, this, 30);
 
    function tick(msDuration) {
